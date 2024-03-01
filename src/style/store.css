@@ -1,0 +1,36 @@
+.price-filter {
+    display: flex;
+    align-items: center;
+    width: auto;;
+  }
+  
+  .input-number {
+    position: relative;
+    margin-right: 10px;
+  }
+  
+  .input-number input {
+    width: 100%;
+    height: 35px;
+    border: solid 1px black;
+  }
+  
+  .qty-controls {
+    position: absolute;
+    right: 1px;
+    top: 40%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .qty-up,
+  .qty-down {
+    width: 20px;
+    height: 20px;
+    color: black;
+    text-align: center;
+    cursor: pointer;
+    /* border-left: solid 1px black;
+    border-bottom: solid 1px black; */
+  }

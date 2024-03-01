@@ -1,0 +1,15 @@
+#footer {
+  background-color: #00483d;
+  border-top: solid 4px rgb(202, 8, 8);
+}
+.footer li {
+  list-style: none;
+  margin: 15px 0px;
+}
+
+/* .fixed-bottom {
+  position: fixed; 
+  bottom: 0; 
+  width: 100%; 
+  z-index: 999; 
+} */

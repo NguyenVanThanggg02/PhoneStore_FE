@@ -1,0 +1,391 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Nguyen Van Thang",
+      "dob": "2002-012-10",
+      "account": "thangnv2002",
+      "password": "12345",
+      "phoneNumber": "0123456789",
+      "city": "Ha Noi",
+      "gender": 0,
+      "email": "thang@gmail.com",
+      "role": 1,
+      "isBan": false
+    }
+  ],
+  "sanpham": [
+      {
+        "id": 1,
+        "hangSanXuat": "Apple",
+        "model": "iPhone 12",
+        "luaChon": [
+          {
+            "mauSac": "Den",
+            "phienBan": "64GB",
+            "gia": 20990000
+          },
+          {
+            "mauSac": "Trang",
+            "phienBan": "128GB",
+            "gia": 22990000
+          },
+          {
+            "mauSac": "Vang",
+            "phienBan": "256GB",
+            "gia": 24990000
+          }
+        ],
+        "moTa": "iPhone 12 với màn hình Super Retina XDR, chip A14 Bionic, hỗ trợ 5G.",
+        "cauHinh": {
+          "congNgheManHinh": "Super Retina XDR",
+          "doPhanGiai": "2532 x 1170 pixels",
+          "kichThuocManHinh": "6.1 inches",
+          "heDieuHanh": "iOS 14",
+          "viXuLy": "A14 Bionic",
+          "boNhoTrong": "64GB/128GB/256GB",
+          "ram": "4GB",
+          "mangDiDong": "5G",
+          "soKheSim": 1
+        },
+        "hinhAnh": [ {
+          "itemImageSrc": "https://cdn.hoanghamobile.com/i/preview/Uploads/2020/11/06/apple-iphone-12-mini-2.png",
+          "alt": "Image 1",
+          "thumbnailImageSrc": "https://cdn.hoanghamobile.com/i/preview/Uploads/2020/11/06/apple-iphone-12-mini-2.png"
+        },
+        {
+          "itemImageSrc": "https://cdn.hoanghamobile.com/i/preview/Uploads/2020/11/06/apple-iphone-12-mini-3.png",
+          "alt": "Image 2",
+          "thumbnailImageSrc": "https://cdn.hoanghamobile.com/i/preview/Uploads/2020/11/06/apple-iphone-12-mini-3.png"
+        },
+        {
+          "itemImageSrc": "https://cdn.hoanghamobile.com/i/preview/Uploads/2020/11/06/apple-iphone-12-mini-4.png",
+          "alt": "Image 3",
+          "thumbnailImageSrc": "https://cdn.hoanghamobile.com/i/preview/Uploads/2020/11/06/apple-iphone-12-mini-4.png"
+        },
+        {
+          "itemImageSrc": "https://cdn.hoanghamobile.com/i/preview/Uploads/2020/11/06/apple-iphone-12-mini.png",
+          "alt": "Image 4",
+          "thumbnailImageSrc": "https://cdn.hoanghamobile.com/i/preview/Uploads/2020/11/06/apple-iphone-12-mini.png"
+        },
+        {
+          "itemImageSrc": "https://cdn.hoanghamobile.com/i/preview/Uploads/2020/11/06/apple-iphone-12-mini-5.png",
+          "alt": "Image 5",
+          "thumbnailImageSrc": "https://cdn.hoanghamobile.com/i/preview/Uploads/2020/11/06/apple-iphone-12-mini-5.png"
+        },
+        {
+          "itemImageSrc": "https://img.enaa.com/oddelki/telefonija/Assets/product_images/apple_iphone_12_128gb_purple_de_telyz28o1npyh.JPG",
+          "alt": "Image 6",
+          "thumbnailImageSrc": "https://img.enaa.com/oddelki/telefonija/Assets/product_images/apple_iphone_12_128gb_purple_de_telyz28o1npyh.JPG"
+        }
+      ]
+      },
+      {
+        "id": 2,
+        "hangSanXuat": "Apple",
+        "model": "iPhone 12 Pro Max",
+        "luaChon": [
+          {
+            "mauSac": "Den",
+            "phienBan": "64GB",
+            "gia": 9990000
+          },
+          {
+            "mauSac": "Xanh",
+            "phienBan": "128GB",
+            "gia": 11990000
+          },
+          {
+            "mauSac": "Trang",
+            "phienBan": "256GB",
+            "gia": 13990000
+          },
+          {
+            "mauSac": "Vang",
+            "phienBan": "256GB",
+            "gia": 32990000
+          }
+        ],
+        "moTa": "iPhone 12 Pro Max với hiệu suất cao, giá phải chăng, hỗ trợ Touch ID.",
+        "cauHinh": {
+          "congNgheManHinh": "Retina HD",
+          "doPhanGiai": "1334 x 750 pixels",
+          "kichThuocManHinh": "4.7 inches",
+          "heDieuHanh": "iOS 14",
+          "viXuLy": "A13 Bionic",
+          "boNhoTrong": "64GB/128GB/256GB",
+          "ram": "3GB",
+          "mangDiDong": "4G",
+          "soKheSim": 1
+        },
+        "hinhAnh":[ {
+          "itemImageSrc": "https://onewaymobile.vn/images/products/2022/07/08/original/iphone-12-promax-oneway_1657260526.png",
+          "alt": "Image 1",
+          "thumbnailImageSrc": "https://onewaymobile.vn/images/products/2022/07/08/original/iphone-12-promax-oneway_1657260526.png"
+        },
+        {
+          "itemImageSrc": "https://achaumobile.com/wp-content/uploads/2022/03/iPhone-12-Pro-3.png",
+          "alt": "Image 2",
+          "thumbnailImageSrc": "https://achaumobile.com/wp-content/uploads/2022/03/iPhone-12-Pro-3.png"
+        },
+        {
+          "itemImageSrc": "https://www.phoneshopkenya.co.ke/wp-content/uploads/2021/01/Apple-iPhone-12-Pro-b.jpg",
+          "alt": "Image 3",
+          "thumbnailImageSrc": "https://www.phoneshopkenya.co.ke/wp-content/uploads/2021/01/Apple-iPhone-12-Pro-b.jpg"
+        },
+        {
+          "itemImageSrc": "https://ik.imagekit.io/3ixwwooea/tr:n-preview_image_og/UjTj2X2M-.jpg",
+          "alt": "Image 4",
+          "thumbnailImageSrc": "https://ik.imagekit.io/3ixwwooea/tr:n-preview_image_og/UjTj2X2M-.jpg"
+        }
+      ]
+      },
+      {
+        "id": 3,
+        "hangSanXuat": "Apple",
+        "model": "iPhone 13 Pro",
+        "luaChon": [
+          {
+            "mauSac": "Den",
+            "phienBan": "128GB",
+            "gia": 30990000
+          },
+          {
+            "mauSac": "Xanh",
+            "phienBan": "256GB",
+            "gia": 32990000
+          },
+          {
+            "mauSac": "Vang",
+            "phienBan": "512GB",
+            "gia": 36990000
+          }
+          
+        ],
+        "moTa": "iPhone 13 Pro với màn hình ProMotion, camera chuyên nghiệp, chip A15 Bionic.",
+        "cauHinh": {
+          "congNgheManHinh": "Super Retina XDR",
+          "doPhanGiai": "2532 x 1170 pixels",
+          "kichThuocManHinh": "6.1 inches",
+          "heDieuHanh": "iOS 15",
+          "viXuLy": "A15 Bionic",
+          "boNhoTrong": "128GB/256GB/512GB/1TB",
+          "ram": "6GB",
+          "mangDiDong": "5G",
+          "soKheSim": 1
+        },
+        "hinhAnh": "https://clickbuy.com.vn/uploads/images/2022/03/avt-iphone-13-blue.png"
+      }
+    ,
+      {
+        "id": 4,
+        "hangSanXuat": "Samsung",
+        "model": "Galaxy S21",
+        "luaChon": [
+          {
+            "mauSac": "Den",
+            "phienBan": "128GB",
+            "gia": 18990000
+          },
+          {
+            "mauSac": "Xanh",
+            "phienBan": "256GB",
+            "gia": 20990000
+          },
+          {
+            "mauSac": "Do",
+            "phienBan": "512GB",
+            "gia": 23990000
+          }
+        ],
+        "moTa": "Galaxy S21 với màn hình Dynamic AMOLED, chip Exynos 2100, camera đa chế độ.",
+        "cauHinh": {
+          "congNgheManHinh": "Dynamic AMOLED",
+          "doPhanGiai": "2400 x 1080 pixels",
+          "kichThuocManHinh": "6.2 inches",
+          "heDieuHanh": "Android 11",
+          "viXuLy": "Exynos 2100",
+          "boNhoTrong": "128GB/256GB/512GB",
+          "ram": "8GB",
+          "mangDiDong": "5G",
+          "soKheSim": 2
+        },
+        "hinhAnh": "https://vn-live-01.slatic.net/p/5f99722b77df33bfc0852774e97ec282.jpg"
+      },
+      {
+        "id": 5,
+        "hangSanXuat": "Samsung",
+        "model": "Galaxy A52",
+        "luaChon": [
+          {
+            "mauSac": "Den",
+            "phienBan": "128GB",
+            "gia": 8990000
+          },
+          {
+            "mauSac": "Xanh",
+            "phienBan": "256GB",
+            "gia": 10990000
+          },
+          {
+            "mauSac": "Tim",
+            "phienBan": "512GB",
+            "gia": 12990000
+          }
+        ],
+        "moTa": "Galaxy A52 với màn hình Super AMOLED, camera đa chế độ, pin lớn.",
+        "cauHinh": {
+          "congNgheManHinh": "Super AMOLED",
+          "doPhanGiai": "2400 x 1080 pixels",
+          "kichThuocManHinh": "6.5 inches",
+          "heDieuHanh": "Android 11",
+          "viXuLy": "Snapdragon 720G",
+          "boNhoTrong": "128GB/256GB/512GB",
+          "ram": "6GB/8GB",
+          "mangDiDong": "4G",
+          "soKheSim": 2
+        },
+        "hinhAnh": "https://bizweb.dktcdn.net/thumb/1024x1024/100/424/653/products/samsung-galaxy-a52-bhdt-den-didongviet-jpeg.jpg?v=1619668369600"
+      },
+      {
+        "id": 6,
+        "hangSanXuat": "Samsung",
+        "model": "Galaxy Note 20 Ultra",
+        "luaChon": [
+          {
+            "mauSac": "Den",
+            "phienBan": "256GB",
+            "gia": 25990000
+          },
+          {
+            "mauSac": "Bac",
+            "phienBan": "512GB",
+            "gia": 27990000
+          },
+          {
+            "mauSac": "Xanh",
+            "phienBan": "1TB",
+            "gia": 30990000
+          }
+        ],
+        "moTa": "Galaxy Note 20 Ultra với bút S Pen, màn hình Dynamic AMOLED, camera chuyên nghiệp.",
+        "cauHinh": {
+          "congNgheManHinh": "Dynamic AMOLED",
+          "doPhanGiai": "3088 x 1440 pixels",
+          "kichThuocManHinh": "6.9 inches",
+          "heDieuHanh": "Android 11",
+          "viXuLy": "Exynos 990",
+          "boNhoTrong": "256GB/512GB/1TB",
+          "ram": "12GB",
+          "mangDiDong": "5G",
+          "soKheSim": 2
+        },
+        "hinhAnh": "https://cdn.xtmobile.vn/vnt_upload/product/08_2019/thumbs/(600x600)_crop_samsung-galaxy-note-20-ultra-my.jpg"
+      },
+      {
+        "id": 7,
+        "hangSanXuat": "Oppo",
+        "model": "Find X3 Pro",
+        "luaChon": [
+          {
+            "mauSac": "Den",
+            "phienBan": "256GB",
+            "gia": 21990000
+          },
+          {
+            "mauSac": "Bac",
+            "phienBan": "512GB",
+            "gia": 24990000
+          },
+          {
+            "mauSac": "Cam",
+            "phienBan": "1TB",
+            "gia": 28990000
+          }
+        ],
+        "moTa": "Find X3 Pro với màn hình AMOLED, chip Snapdragon 888, camera chuyên nghiệp.",
+        "cauHinh": {
+          "congNgheManHinh": "AMOLED",
+          "doPhanGiai": "3216 x 1440 pixels",
+          "kichThuocManHinh": "6.7 inches",
+          "heDieuHanh": "ColorOS 11",
+          "viXuLy": "Snapdragon 888",
+          "boNhoTrong": "256GB/512GB/1TB",
+          "ram": "12GB",
+          "mangDiDong": "5G",
+          "soKheSim": 2
+        },
+        "hinhAnh": "https://cdn.tgdd.vn/Products/Images/42/232190/oppo-find-x3-pro-black-001-1-600x600.jpg"
+      },
+      {
+        "id": 8,
+        "hangSanXuat": "Oppo",
+        "model": "Reno 6",
+        "luaChon": [
+          {
+            "mauSac": "Den",
+            "phienBan": "128GB",
+            "gia": 12990000
+          },
+          {
+            "mauSac": "Trang",
+            "phienBan": "256GB",
+            "gia": 14990000
+          },
+          {
+            "mauSac": "Xanh",
+            "phienBan": "512GB",
+            "gia": 17990000
+          }
+        ],
+        "moTa": "Reno 6 với màn hình AMOLED, camera chuyên nghiệp, sạc nhanh SuperVOOC 2.0.",
+        "cauHinh": {
+          "congNgheManHinh": "AMOLED",
+          "doPhanGiai": "2400 x 1080 pixels",
+          "kichThuocManHinh": "6.43 inches",
+          "heDieuHanh": "ColorOS 11",
+          "viXuLy": "MediaTek Dimensity 900",
+          "boNhoTrong": "128GB/256GB/512GB",
+          "ram": "8GB",
+          "mangDiDong": "5G",
+          "soKheSim": 2
+        },
+        "hinhAnh": "https://cdn.viettelstore.vn/Images/Product/ProductImage/921457405.jpeg"
+      },
+      {
+        "id": 9,
+        "hangSanXuat": "Oppo",
+        "model": "A74",
+        "luaChon": [
+          {
+            "mauSac": "Den",
+            "phienBan": "64GB",
+            "gia": 6990000
+          },
+          {
+            "mauSac": "Bac",
+            "phienBan": "128GB",
+            "gia": 7990000
+          },
+          {
+            "mauSac": "Do",
+            "phienBan": "256GB",
+            "gia": 8990000
+          }
+        ],
+        "moTa": "Oppo A74 với màn hình AMOLED, camera đa chế độ, pin lớn.",
+        "cauHinh": {
+          "congNgheManHinh": "AMOLED",
+          "doPhanGiai": "2400 x 1080 pixels",
+          "kichThuocManHinh": "6.43 inches",
+          "heDieuHanh": "ColorOS 11",
+          "viXuLy": "Snapdragon 662",
+          "boNhoTrong": "64GB/128GB/256GB",
+          "ram": "6GB/8GB",
+          "mangDiDong": "4G",
+          "soKheSim": 2
+        },
+        "hinhAnh": "https://cdn.tgdd.vn/Products/Images/42/235653/oppo-a74-black-9-200x200.jpg"
+      }
+    ]
+}

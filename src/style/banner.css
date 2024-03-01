@@ -1,0 +1,30 @@
+.Banner{
+    background-color: #147ad4;
+    height: 150px;
+    padding-top: 45px;
+    border-bottom: solid 4px rgb(202, 8, 8);
+    
+}
+.items_option{
+    border-radius: 30px 0 0 30px;
+    width: auto;
+}
+.Banner button{
+    border-radius: 0px 30px 30px 0px;
+    
+}
+.search input  {
+    border: none;
+    box-shadow:  0 5px 6px #ccc;
+
+}
+.search button  {
+    border: none;
+    box-shadow:  0 5px 6px #ccc;
+
+}
+.search select  {
+    border: none;
+    box-shadow:  0 5px 6px #ccc;
+
+}

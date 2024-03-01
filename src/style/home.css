@@ -1,0 +1,32 @@
+.home {
+  margin-top: 20px;
+  height: 45px;
+}
+
+/* .home:hover {
+  color: red !important;
+  text-decoration: underline;
+  text-decoration-color: red;
+} */
+.new-products {
+  margin-top: 70px;
+}
+.category{
+    margin-top: 60px;
+}
+.new-products-item{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.link-item {
+  display: flex;
+  justify-content: start; /* hoặc space-between tùy theo yêu cầu của bạn */
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-right: 100px;
+  /* border: 1px solid #ccc; */
+}
+
