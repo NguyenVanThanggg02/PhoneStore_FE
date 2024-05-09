@@ -1,32 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { CartCheck, CartPlus, CashCoin, GearFill } from "react-bootstrap-icons";
+import {
+  CartCheck,
+  CartPlus,
+  CashCoin,
+  GearFill,
+  HouseHeartFill,
+} from "react-bootstrap-icons";
 import { Galleria } from "primereact/galleria";
 import freeship from "../../src/assets/images/freeship.png";
 import changeedit from "../../src/assets/images/change&edit.jpg";
 import SimilarProduct from "./SimilarProduct";
 import { useParams } from "react-router-dom";
+import { BreadCrumb } from "primereact/breadcrumb";
+import Comments from "../screens/Comments";
 
 const Details = () => {
   const { pid } = useParams();
   const [product, setProduct] = useState({}); // Initialize as null instead of an empty object
-  const [phienBan, setPhienBan] = useState([]); // Initialize as empty array
-  const [mauSac, setMauSac] = useState([]);
+  const [version, setVersion] = useState([]); // Initialize as empty array
+  const [color, setColor] = useState([]);
   const [images, setImages] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:9999/sanpham/${pid}`)
+    fetch(`http://localhost:9999/products/${pid}`)
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
         setProduct(data);
-        setPhienBan(data?.luaChon || []); // Set phienBan from luaChon array
-        setMauSac(data?.luaChon || []);
-        const imageUrls = data?.hinhAnh.map((item) => ({
-          itemImageSrc: item.itemImageSrc,
-          alt: item.alt,
-          thumbnailImageSrc: item.thumbnailImageSrc,
-        }));
-        setImages(imageUrls);
+        setVersion(data?.option || []);
+        setColor(data?.option || []);
       })
       .catch((err) => {
         console.log(err.message);
@@ -58,21 +60,6 @@ const Details = () => {
     setSelectedButtonColor(index);
   };
 
-  const itemTemplate = (item) => {
-    return (
-      <img src={item.itemImageSrc} alt={item.alt} style={{ width: "100%" }} />
-    );
-  };
-
-  const thumbnailTemplate = (item) => {
-    return (
-      <img
-        src={item.thumbnailImageSrc}
-        alt={item.alt}
-        style={{ width: "60%" }}
-      />
-    );
-  };
   const increaseQuantity = () => {
     setValue((prevValue) => prevValue + 1);
   };
@@ -82,58 +69,87 @@ const Details = () => {
       setValue((prevValue) => prevValue - 1);
     }
   };
-  const allPrices = product.luaChon?.map((g) => g.gia)[0];
+  const allPrices = product.option?.map((g) => g.price)[0];
 
+  const formatCurrency = (value) => {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  const items = [
+    {
+      label: (
+        <span style={{ color: "gray", marginLeft: "-80px", fontSize: "19px" }}>
+          Danh sách sản phẩm
+        </span>
+      ),
+      url: "http://localhost:3000/listproduct",
+    },
+
+    {
+      label: (
+        <span style={{ color: "gray", marginLeft: "-80px", fontSize: "19px" }}>
+          Chi tiết sản phẩm
+        </span>
+      ),
+    },
+    {
+      label: (
+        <span style={{ color: "gray", marginLeft: "-80px", fontSize: "19px" }}>
+          {product.name}
+        </span>
+      ),
+    },
+  ];
+  const home = {
+    icon: (
+      <HouseHeartFill
+        style={{
+          fontSize: "30px",
+          marginLeft: "10px",
+          marginRight: "-80px",
+          color: "gray",
+        }}
+      />
+    ),
+    url: "http://localhost:3000",
+  };
   return (
-    <Container fluid>
-      <Row className=" mt-5">
+    <Container fluid >
+      <Row className="mt-3" style={{ border: "solid #CCC 1px", margin:"20px", boxShadow:'5px 10px 10px 5px #C0C0C0', borderRadius:'20px' }}>
+        <BreadCrumb model={items} home={home}  style={{marginTop:'15px'}}/>
+      </Row>
+      <Row className=" mt-5 bg-light" style={{margin:"20px",  boxShadow:'5px 10px 10px 5px #C0C0C0', borderRadius:"20px"}}>
         <Col md={4}>
           <div className="carddetail">
             <Galleria
-              value={images} // Use images state for Galleria value
+              value={product?.images} // Use images state for Galleria value
               responsiveOptions={responsiveOptions}
               numVisible={5}
               style={{ maxWidth: "640px" }}
-              item={itemTemplate}
-              thumbnail={thumbnailTemplate}
+              item={(item) => (
+                <img src={item} alt="aa" style={{ width: "100%" }} />
+              )}
+              thumbnail={(item) => (
+                <img src={item} alt="aaa" style={{ width: "100%" }} />
+              )}
             />
           </div>
           <div className="mt-4">
-            <p>{product.moTa}</p>
+            <p>{product.description}</p>
           </div>
         </Col>
 
         {/* <!-- Product details --> */}
-        <Col md={5}>
+        <Col md={5} style={{marginTop:'10px'}}>
           <div className="product-details">
             <h2 className="product-name mb-4 text-dark">
-              <strong>{product.model}</strong>
+              <strong>{product.name}</strong>
             </h2>
-
-            <div className="d-flex justify-content-between">
-              <h3 class="product-price">
-                <CashCoin
-                  style={{
-                    fontSize: "40px",
-                    color: "gold",
-                    marginRight: "15px",
-                  }}
-                />
-                {allPrices + "đ"}
-                <del
-                  class="product-old-price"
-                  style={{ color: "gray", fontSize: "smaller" }}
-                >
-                  $990.00
-                </del>
-              </h3>
-            </div>
-
             <div class="product-ver">
               <label>
                 <h4>Lựa Chọn Phiên Bản</h4>
                 <div className="mt-2 d-flex justify-content-center">
-                  {phienBan.map((v, index) => (
+                  {version.map((v, index) => (
                     <div key={index} className="mr-2 inline-block">
                       <Button
                         className={` ${
@@ -143,7 +159,9 @@ const Details = () => {
                         }`}
                         onClick={() => handleButtonClick(index)}
                       >
-                        <span>{v.phienBan}</span>
+                        <span>{v.version}</span>
+                        <br />
+                        <span>{formatCurrency(v.price) + " đ"}</span>
                       </Button>
                     </div>
                   ))}
@@ -154,7 +172,7 @@ const Details = () => {
               <label>
                 <h4>Lựa Chọn Màu</h4>
                 <div className="mt-2 d-flex justify-content-center">
-                  {mauSac.map((m, index) => (
+                  {color.map((m, index) => (
                     <div key={index} className="mr-2 inline-block">
                       <Button
                         className={` ${
@@ -164,7 +182,7 @@ const Details = () => {
                         }`}
                         onClick={() => handleButtonColorClick(index)}
                       >
-                        <span>{m.mauSac}</span>
+                        <span>{m.color}</span>
                       </Button>
                     </div>
                   ))}
@@ -189,7 +207,7 @@ const Details = () => {
                   Miễn Phí Sửa, Đổi, Trả Hàng
                 </span>
                 <p>
-                  Đổi hàng trong 30 ngày kể từ ngày mua hỗ trợ sửa chữa miễn phí
+                  Đổi hàng trong 7 ngày kể từ ngày mua hỗ trợ sửa chữa miễn phí
                 </p>
               </Col>
             </div>
@@ -234,50 +252,53 @@ const Details = () => {
             </Button>
           </div>
         </Col>
-        <Col md={3}>
+        <Col md={3} style={{marginTop:'10px'}}>
           <h4>
             <GearFill /> Cấu Hình
           </h4>
           <p>
             <span style={{ fontWeight: "bold" }}>Công nghệ màn hình:</span>
-            {product.cauHinh?.congNgheManHinh}
+            {product.configuration?.congNgheManHinh}
           </p>
           <p>
             <span style={{ fontWeight: "bold" }}>Độ phân giải:</span>
-            {product.cauHinh?.doPhanGiai}
+            {product.configuration?.doPhanGiai}
           </p>
           <p>
             <span style={{ fontWeight: "bold" }}>Kích thước màn hình:</span>
-            {product.cauHinh?.kichThuocManHinh}
+            {product.configuration?.kichThuocManHinh}
           </p>
           <p>
             <span style={{ fontWeight: "bold" }}>Hệ điều hành:</span>
-            {product.cauHinh?.heDieuHanh}
+            {product.configuration?.heDieuHanh}
           </p>
           <p>
             <span style={{ fontWeight: "bold" }}>Vi xử lý:</span>
-            {product.cauHinh?.viXuLy}
+            {product.configuration?.viXuLy}
           </p>
           <p>
             <span style={{ fontWeight: "bold" }}>Bộ nhớ trong:</span>{" "}
-            {product.cauHinh?.boNhoTrong}
+            {product.configuration?.boNhoTrong}
           </p>
           <p>
             <span style={{ fontWeight: "bold" }}>RAM: </span>
-            {product.cauHinh?.ram}
+            {product.configuration?.ram}
           </p>
           <p>
             <span style={{ fontWeight: "bold" }}>Mạng di động:</span>{" "}
-            {product.cauHinh?.mangDiDong}
+            {product.configuration?.mangDiDong}
           </p>
           <p>
             <span style={{ fontWeight: "bold" }}>Số khe SIM:</span>
-            {product.cauHinh?.soKheSim}
+            {product.configuration?.soKheSim}
           </p>
         </Col>
       </Row>
       <Row>
-        <SimilarProduct />
+        <Comments />
+      </Row>
+      <Row>
+        <SimilarProduct product={product} />
       </Row>
     </Container>
   );

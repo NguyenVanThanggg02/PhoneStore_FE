@@ -15,11 +15,12 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import UserProfile from "../screens/UserProfile";
 
-const settings = ["Profile", "Account", "Logout", "Change Password"];
 const HeaderApp = ({ username }) => {
+  const settings = ["Profile", "Logout", "Change Password"];
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const nav = useNavigate();
-
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -37,16 +38,27 @@ const HeaderApp = ({ username }) => {
     nav("/profile");
     handleCloseUserMenu();
   };
+  const handleChangePass = () => {
+    nav("/changepass");
+    handleCloseUserMenu();
+  };
+  const handleDashBoard = () => {
+    nav("/dashboard");
+    handleCloseUserMenu();
+  };
+  if (user && user.role === 1) {
+    settings.push("DashBoard");
+  }
   return (
     <Container fluid>
       <div>
         <Row className="header">
           <Col md={6} xs={12} sm={6} className="header-item d-flex text-white">
             <Col md={4} sm={4} xs={4}>
-              <TelephoneFill style={{ color: "red" }} /> +8423456
+              <TelephoneFill style={{ color: "red" }} /> {user.phone}
             </Col>
             <Col md={4} sm={4} xs={4}>
-              <EnvelopeFill style={{ color: "red" }} /> dev@gmail
+              <EnvelopeFill style={{ color: "red" }} /> {user.email}
             </Col>
             <Col md={4} sm={4} xs={4}>
               <GeoAltFill style={{ color: "red" }} /> Ha-Noi
@@ -80,9 +92,9 @@ const HeaderApp = ({ username }) => {
                   <IconButton
                     onClick={handleOpenUserMenu}
                     sx={{ p: 0 }}
-                    style={{ color: "white" , marginTop:'-10px' }}
+                    style={{ color: "white", marginTop: "6px" }}
                   >
-                    {username}
+                    <h6 style={{ fontSize: "16px" }}>{username}</h6>
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -101,20 +113,28 @@ const HeaderApp = ({ username }) => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem
-                      key={setting}
-                      onClick={
-                        setting === "Logout"
-                          ? handleLogout
-                          : setting === "Profile"
-                          ? handleProfile
-                          : handleCloseUserMenu
-                      }
-                    >
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
+                  {settings.map((setting) =>
+                    setting === "DashBoard" && user && user.role === 1 ? (
+                      <MenuItem key={setting} onClick={handleDashBoard}>
+                        <Typography textAlign="center">{setting}</Typography>
+                      </MenuItem>
+                    ) : (
+                      <MenuItem
+                        key={setting}
+                        onClick={
+                          setting === "Logout"
+                            ? handleLogout
+                            : setting === "Profile"
+                            ? handleProfile
+                            : setting === "Change Password"
+                            ? handleChangePass
+                            : handleCloseUserMenu
+                        }
+                      >
+                        <Typography textAlign="center">{setting}</Typography>
+                      </MenuItem>
+                    )
+                  )}
                 </Menu>
               </Box>
             </Col>

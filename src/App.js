@@ -30,6 +30,7 @@ import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import HeaderApp from "./components/HeaderApp";
 import ListProduct from "./Models/ListProduct";
+import ChangePassWord from "./screens/ChangePass";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -83,6 +84,7 @@ function App() {
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/profile/editprofile" element={<EditProfile />} />
           <Route path="/listproduct" element={<ListProduct/>} />
+          <Route path="/changepass" element={<ChangePassWord/>} />
         </Routes>
         <Footer />
         <ToastContainer />

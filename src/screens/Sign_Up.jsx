@@ -11,12 +11,15 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sign_Up = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
+
   const nav = useNavigate();
 
   const IsValaccountate = () => {
@@ -50,25 +53,34 @@ const Sign_Up = () => {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    let regobj = {
-      user: {
-        username: username,
-        email: email,
-        password: password,
-      },
-    };
+
     if (IsValaccountate()) {
-      axios
-        .post("https://api.realworld.io/api/users", regobj, {
-          headers: { "content-type": "application/json" },
-        })
-        .then((res) => {
-          toast.success("Registered successfully.");
-          nav("/sign_in");
-        })
-        .catch((err) => {
-          toast.error("Failed :" + err.message);
-        });
+      if (password !== confirmPassword) {
+        setPasswordMatchError(true);
+        return;
+      } else {
+        setPasswordMatchError(false);
+        axios
+          .post("http://localhost:9999/users/register", {
+            username: username,
+            email: email,
+            password: password,
+          })
+          .then((response) => {
+            if (response.status === 201) {
+              toast.success("Đăng ký thành công");
+              nav("/sign_in");
+            } else {
+              toast.error("Đăng ký thất bại");
+            }
+          })
+          .catch((error) => {
+            if (error.response && error.response.status === 409) {
+              // Username or email already exists
+              toast.error("Username already exists");
+            } 
+          });
+      }
     }
   };
 
@@ -93,7 +105,7 @@ const Sign_Up = () => {
                       <label for="">UserName</label>
                     </div>
                     <div className="inputbox-signup">
-                      <Envelope className="icon" />
+                      <FileLock className="icon" />
                       <input
                         type="text"
                         required
@@ -101,23 +113,6 @@ const Sign_Up = () => {
                         onChange={(e) => setEmail(e.target.value)}
                       ></input>
                       <label for="">Email</label>
-                    </div>
-                    <div className="inputbox-signup">
-                      <Phone className="icon" />
-                      <input type="text"></input>
-                      <label for="">Phone</label>
-                    </div>
-                    <div className="inputbox-signup">
-                      <GeoAltFill className="icon" />
-                      <input type="text"></input>
-                      <label for="">Address</label>
-                    </div>
-                  </Col>
-                  <Col md={6} sm={12} xs={12}>
-                    <div className="inputbox-signup">
-                      <Calendar3 className="icon" />
-                      <input type="text"></input>
-                      <label for="">Date Of Birth</label>
                     </div>
                     <div className="inputbox-signup">
                       <FileLock className="icon" />
@@ -131,21 +126,29 @@ const Sign_Up = () => {
                     </div>
                     <div className="inputbox-signup">
                       <FileLock className="icon" />
-                      <input type="password"></input>
-                      <label for="">Re-Password</label>
-                    </div>{" "}
+                      <input
+                        type="password"
+                        required
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                      ></input>
+                      {passwordMatchError && (
+                        <div className="m-2 text-xs" style={{ color: "red" }}>
+                          confirmPassword is wrrong !
+                        </div>
+                      )}
+                      <label for="">ConFirmPassword</label>
+                    </div>
                   </Col>
                 </Row>
-
-                <div className="statement">
-                  <input type="checkbox" value="" />
-                  <label className="form-check-label">
-                    I agree with this statement
-                  </label>
-                </div>
                 <div className="btn-signup">
                   <button>Register</button>
                 </div>
+                <div className="register">
+                <p>
+                  I have a account <Link to={'/sign_in'}>Login</Link>{" "}
+                </p>
+              </div>
               </form>
             </div>
           </div>
