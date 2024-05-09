@@ -41,8 +41,8 @@ const SimilarProduct = ({ product }) => {
         borderRadius: "20px",
       }}
     >
-      <Row>
-        <h3 style={{ margin: "20px" }}>Sản phẩm Tương Tự</h3>
+      <Row style={{ display:'flex', justifyContent:'center'}}>
+        <h3 style={{ margin: "20px", display:'flex', justifyContent:'center' }}>Sản phẩm Tương Tự</h3>
       </Row>
       <Row>
         {similarProducts.slice(0, 4).map((s) => (

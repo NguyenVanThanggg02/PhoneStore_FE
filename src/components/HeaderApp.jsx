@@ -15,7 +15,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import UserProfile from "../screens/UserProfile";
 
-const HeaderApp = ({ username }) => {
+const HeaderApp = () => {
   const settings = ["Profile", "Logout", "Change Password"];
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const nav = useNavigate();
@@ -94,7 +94,7 @@ const HeaderApp = ({ username }) => {
                     sx={{ p: 0 }}
                     style={{ color: "white", marginTop: "6px" }}
                   >
-                    <h6 style={{ fontSize: "16px" }}>{username}</h6>
+                    <h6 style={{ fontSize: "16px" }}>{user.full_name ? user.full_name : user.username}</h6>
                   </IconButton>
                 </Tooltip>
                 <Menu

@@ -8,12 +8,12 @@ const Banner = () => {
   return (
     <Container fluid className="Banner">
       <Row>
-        <Col md={3} xs={12} sm={6} className="text-white d-flex justify-content-center align-items-center">
+        <Col md={6} xs={12} sm={6} className="text-white d-flex justify-content-start align-items-center">
           <a href="/" className="text-white">
             <img src={logo} style={{ width: "95px", borderRadius:'50%', height:'93px' }} />
           </a>
         </Col>
-        <Col md={6} xs={12} sm={6} className="d-flex justify-content-center align-items-center search">
+        {/* <Col md={6} xs={12} sm={6} className="d-flex justify-content-center align-items-center search">
           <select className="items_option" style={{ width: "120px", paddingLeft: "10px",height: "38px" }}>
             <option value="0">Chọn hãng</option>
             <option value="1">Iphone</option>
@@ -25,8 +25,8 @@ const Banner = () => {
           <Button type="submit" className="btn btn-danger" style={{ fontWeight: "bold", height: "38px" }}>
             Search
           </Button>
-        </Col>
-        <Col md={3} xs={12} sm={6} className="text-right d-flex justify-content-center align-items-center">
+        </Col> */}
+        <Col md={6} xs={12} sm={6} className="text-right d-flex justify-content-center align-items-center">
           <CartDashFill style={{ color: "white", fontSize: "30px" }} />
         </Col>
       </Row>

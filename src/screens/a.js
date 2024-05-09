@@ -3,6 +3,9 @@ import {
   Button,
   Col,
   Container,
+  Form,
+  FormControl,
+  FormGroup,
   Row,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,10 +13,12 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import {
-  HouseHeartFill,
+  Envelope,
+  Facebook,
+  FileLock,
+  Linkedin,
+  Twitter,
 } from "react-bootstrap-icons";
-import { BreadCrumb } from "primereact/breadcrumb";
-import logo from "../../src/assets/images/logo.jpg";
 
 const Sign_In = ({ handleLogin }) => {
   const [email, setEmail] = useState("");
@@ -60,38 +65,8 @@ const Sign_In = ({ handleLogin }) => {
     }
   };
 
-
-
-  const items = [
-    {
-      label: (
-        <span style={{ color: "gray", marginLeft: "-80px", fontSize: "19px" }}>
-          Đăng Nhập
-        </span>
-      ),
-      url: "http://localhost:3000/sign_in",
-    }
-  ];
-  const home = {
-    icon: (
-      <HouseHeartFill
-        style={{
-          fontSize: "30px",
-          marginLeft: "10px",
-          marginRight: "-80px",
-          color: "gray",
-        }}
-      />
-    ),
-    url: "http://localhost:3000",
-  };
-
-
   return (
-    <Container fluid>
-      <Row className="mt-3" style={{ border: "solid #CCC 1px", margin:"20px", boxShadow:'5px 10px 10px 5px #C0C0C0', borderRadius:'20px' }}>
-        <BreadCrumb model={items} home={home}  style={{marginTop:'15px'}}/>
-      </Row>
+    <Container>
       <Row
         className="justify-content-center align-items-center"
         style={{ height: "100vh" }}
@@ -101,9 +76,9 @@ const Sign_In = ({ handleLogin }) => {
             <form className="form_container" onSubmit={ProcessLogin}>
               <div className="logo_container">
                 <img
-                  src={logo} alt="logo"
+                  // src={logo} alt="logo"
                   height={80}
-                  style={{ objectFit: "contain", borderRadius:'50px' }}
+                  style={{ objectFit: "contain" }}
                 />
               </div>
               <div className="title_container">
@@ -197,7 +172,7 @@ const Sign_In = ({ handleLogin }) => {
                   }}
                 />
               </div>
-              <Button variant="dark" className="sign-in_btn mb-3 mt-2" type="submit">
+              <Button variant="dark" className="sign-in_btn mb-3 mt-2">
                 Sign In
               </Button>
               <div>
