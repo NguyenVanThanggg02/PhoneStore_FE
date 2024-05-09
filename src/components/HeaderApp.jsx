@@ -15,8 +15,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import UserProfile from "../screens/UserProfile";
 
-const settings = ["Profile", "Logout", "Change Password", "DashBoard"];
 const HeaderApp = ({ username }) => {
+  const settings = ["Profile", "Logout", "Change Password"];
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const nav = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
@@ -46,6 +46,9 @@ const HeaderApp = ({ username }) => {
     nav("/dashboard");
     handleCloseUserMenu();
   };
+  if (user && user.role === 1) {
+    settings.push("DashBoard");
+  }
   return (
     <Container fluid>
       <div>
@@ -110,24 +113,28 @@ const HeaderApp = ({ username }) => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem
-                      key={setting}
-                      onClick={
-                        setting === "Logout"
-                          ? handleLogout
-                          : setting === "Profile"
-                          ? handleProfile
-                          : setting === "Change Password"
-                          ? handleChangePass
-                          : setting === "DashBoard"
-                          ? handleDashBoard
-                          : handleCloseUserMenu
-                      }
-                    >
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
+                  {settings.map((setting) =>
+                    setting === "DashBoard" && user && user.role === 1 ? (
+                      <MenuItem key={setting} onClick={handleDashBoard}>
+                        <Typography textAlign="center">{setting}</Typography>
+                      </MenuItem>
+                    ) : (
+                      <MenuItem
+                        key={setting}
+                        onClick={
+                          setting === "Logout"
+                            ? handleLogout
+                            : setting === "Profile"
+                            ? handleProfile
+                            : setting === "Change Password"
+                            ? handleChangePass
+                            : handleCloseUserMenu
+                        }
+                      >
+                        <Typography textAlign="center">{setting}</Typography>
+                      </MenuItem>
+                    )
+                  )}
                 </Menu>
               </Box>
             </Col>

@@ -28,17 +28,21 @@ const ChangePassWord = () => {
 
   const handleUpdate = () => {
     if (!oldPass || !newPass || !reNewPass) {
-      alert("Please fill in all fields!");
+      toast.error("Please fill in all fields!");
       return;
     }
     if (newPass !== reNewPass) {
-      alert("New passwords do not match!");
+      toast.error("New passwords do not match!");
       return;
     }
     if (oldPass !== user.password) {
-      alert("Old password is incorrect!");
+      toast.error("Old password is incorrect!");
       return;
     }
+    if (oldPass === newPass && oldPass === reNewPass) {
+      toast.error("The new password must be different from the old password");
+      return;
+  }
 
     axios
       .put(`http://localhost:9999/users/${user.username}`, {
@@ -58,7 +62,7 @@ const ChangePassWord = () => {
       })
       .catch((error) => {
         console.error("Error: ", error);
-        alert("Change password failed!");
+        toast.error("Change password failed!");
       });
   };
   const items = [
