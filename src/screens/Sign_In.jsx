@@ -47,11 +47,9 @@ const Sign_In = ({ handleLogin }) => {
     if (validate()) {
       console.log(email, password);
       axios
-        .post("https://api.realworld.io/api/users/login", {
-          user: {
-            email: email,
+        .post("http://localhost:9999/users/login", {
+            username: email,
             password: password,
-          },
         })
         .then((res) => {
           const user = res.data.user;
