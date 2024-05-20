@@ -2,100 +2,91 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { PlusSquareFill, Trash, TrashFill, X } from "react-bootstrap-icons";
+import { PlusSquareFill, TrashFill, X } from "react-bootstrap-icons";
 import { Col, FormSelect, Row } from "react-bootstrap";
 import "../style/addproduct.css";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const AddProduct = (props) => {
-  const { visible, setVisible } = props;
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [option, setOption] = useState([{ color: "", version: "", price: "" }]);
-  const [images, setImages] = useState([]);
-  const [congNgheManHinh, setCongNgheManHinh] = useState("");
-  const [doPhanGiai, setDoPhanGiai] = useState("");
-  const [kichThuocManHinh, setKichThuocManHinh] = useState("");
-  const [heDieuHanh, setHeDieuHanh] = useState("");
-  const [viXuLy, setViXuLy] = useState("");
-  const [boNhoTrong, setBoNhoTrong] = useState("");
-  const [ram, setRam] = useState("");
-  const [mangDiDong, setMangDiDong] = useState("");
-  const [soKheSim, setSoKheSim] = useState("");
+const EditProduct = (props) => {
+  const { editVisible, setEditVisible, data } = props;
+  const [name, setName] = useState(data?.name);
+  const [description, setDescription] = useState(data?.description);
+  const [quantity, setQuantity] = useState(data?.quantity);
+  const [option, setOption] = useState(
+    data?.option || [{ color: "", version: "", price: "" }]
+  );
+  const [images, setImages] = useState([data?.images[0]]);
+  const [congNgheManHinh, setCongNgheManHinh] = useState(
+    data?.configuration.congNgheManHinh
+  );
+  const [doPhanGiai, setDoPhanGiai] = useState(data?.configuration.doPhanGiai);
+  const [kichThuocManHinh, setKichThuocManHinh] = useState(
+    data?.configuration.kichThuocManHinh
+  );
+  const [heDieuHanh, setHeDieuHanh] = useState(data?.configuration.heDieuHanh);
+  const [viXuLy, setViXuLy] = useState(data?.configuration.viXuLy);
+  const [boNhoTrong, setBoNhoTrong] = useState(data?.configuration.boNhoTrong);
+  const [ram, setRam] = useState(data?.configuration.ram);
+  const [mangDiDong, setMangDiDong] = useState(data?.configuration.mangDiDong);
+  const [soKheSim, setSoKheSim] = useState(data?.configuration.soKheSim);
   const [brands, setBrands] = useState([]);
-  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState(data?.brand._id);
   const nav = useNavigate();
-
+  // console.log(data);
   useEffect(() => {
     axios
       .get("http://localhost:9999/brands")
       .then((response) => setBrands(response.data))
       .catch((error) => console.error("error fetching brands", error));
   }, []);
-  console.log(selectedBrand);
+
   const onHide = () => {
-    setVisible(false);
+    setEditVisible(false);
+  };
+  const handleEditProduct = (e) => {
+    e.preventDefault();
+    const configurationId = data?.configuration._id;
+    axios
+      .put(`http://localhost:9999/products/${data._id}`, {
+        brand: selectedBrand,
+        name: name,
+        option: option,
+        quantity: quantity,
+        description: description,
+        configuration: configurationId,
+        images: images,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          toast.success("Chỉnh sửa sản phẩm thành công");
+          nav("/dashboard");
+          setEditVisible(false);
+          console.log(data);
+        } else {
+          toast.error("Chỉnh sửa sản phẩm thất bại");
+        }
+      })
+      .catch((error) => {
+        toast.error("Chỉnh sửa sản phẩm thất bại: " + error.message);
+      });
   };
 
   const dialogFooter = (
     <div style={{ margin: "20px" }}>
       <Button
-        className="btn btn-success mr-2"
+        className=" btn btn-success mr-2"
         type="submit"
-        form="addProductForm"
+        form="editProductForm"
       >
-        <PlusSquareFill /> Add
+        <PlusSquareFill /> Save
       </Button>
-      <Button onClick={onHide} className="btn btn-danger">
+      <Button onClick={onHide} className=" btn btn-danger">
         <X style={{ fontSize: "22px" }} />
         Close
       </Button>
     </div>
   );
-
-  const handleAddProduct = (e) => {
-    e.preventDefault();
-    axios
-      .get(`http://localhost:9999/products?name=${name}`)
-      .then((response) => {
-        const existingProduct = response.data.find((p) => p.name === name);
-        if (existingProduct) {
-          toast.error("Product name already exists");
-        } else {
-          axios
-            .post("http://localhost:9999/products", {
-              brand: selectedBrand,
-              name: name,
-              option: option,
-              quantity: quantity,
-              description: description,
-              configuration: {
-                congNgheManHinh: congNgheManHinh,
-                doPhanGiai: doPhanGiai,
-                kichThuocManHinh: kichThuocManHinh,
-                heDieuHanh: heDieuHanh,
-                viXuLy: viXuLy,
-                boNhoTrong: boNhoTrong,
-                ram: ram,
-                mangDiDong: mangDiDong,
-                soKheSim: soKheSim,
-              },
-              images: images,
-            })
-            .then((response) => {
-              if (response.status === 201) {
-                toast.success("Thêm sản phẩm thành công");
-                nav("/dashboard");
-                setVisible(false);
-              } else {
-                toast.error("Thêm sản phẩm thất bại");
-              }
-            });
-        }
-      });
-  };
 
   const addOption = () => {
     setOption([...option, { color: "", version: "", price: "" }]);
@@ -130,17 +121,17 @@ const AddProduct = (props) => {
   return (
     <div className="card flex justify-content-center">
       <Dialog
-        visible={visible}
-        onHide={() => setVisible(false)}
+        visible={editVisible}
+        onHide={() => setEditVisible(false)}
         footer={dialogFooter}
         className="bg-light"
         style={{ width: "70vw" }}
         modal
-        header={<div className="custom-dialog-header">Add Product</div>}
+        header={<div className="custom-dialog-header">Edit Product</div>}
       >
         <div className="bg-light p-1" style={{ margin: "25px" }}>
           <div style={{ margin: "40px" }}>
-            <form id="addProductForm" onSubmit={handleAddProduct}>
+            <form id="editProductForm" onSubmit={handleEditProduct}>
               <Row>
                 <Col md={6}>
                   <div className="form-group w-full">
@@ -174,21 +165,6 @@ const AddProduct = (props) => {
                     />
                   </div>
 
-                  {/* <div className="form-group w-full">
-                    <label className="label" htmlFor="images">
-                      <h6>Images</h6>
-                    </label>
-                    <input
-                      type="url"
-                      className="form-control"
-                      name="images"
-                      value={images}
-                      onChange={(e) => setImages(e.target.value)}
-                      placeholder="Input image URL"
-                      style={{ height: "50px" }}
-                      required
-                    />
-                  </div> */}
                   <div className="form-group w-full">
                     <label className="label" htmlFor="brand">
                       <h6>Brand</h6>
@@ -343,65 +319,69 @@ const AddProduct = (props) => {
               </Row>
               <Row>
                 <Col md={4}>
-                <div className="form-group mt-2">
-                  <h6>Options</h6>
-                  {option.map((o, index) => (
-                    <div key={index} className="option-container">
-                      <div className="form-group">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Color"
-                          style={{ height: "50px" }}
-                          value={o.color}
-                          onChange={(e) =>
-                            handleOptionChange(index, "color", e.target.value)
-                          }
-                          required
-                        />
+                  <div className="form-group mt-2">
+                    <h6>Options</h6>
+                    {option.map((o, index) => (
+                      <div key={index} className="option-container">
+                        <div className="form-group">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Color"
+                            style={{ height: "50px" }}
+                            value={o.color}
+                            onChange={(e) =>
+                              handleOptionChange(index, "color", e.target.value)
+                            }
+                            required
+                          />
+                        </div>
+                        <div className="form-group">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Version"
+                            style={{ height: "50px" }}
+                            value={o.version}
+                            onChange={(e) =>
+                              handleOptionChange(
+                                index,
+                                "version",
+                                e.target.value
+                              )
+                            }
+                            required
+                          />
+                        </div>
+                        <div className="form-group">
+                          <input
+                            type="number"
+                            className="form-control"
+                            placeholder="Price"
+                            style={{ height: "50px" }}
+                            value={o.price}
+                            onChange={(e) =>
+                              handleOptionChange(index, "price", e.target.value)
+                            }
+                            required
+                          />
+                        </div>
+                        <Button
+                          type="button"
+                          className="btn btn-danger mb-2"
+                          onClick={() => removeOption(index)}
+                        >
+                          <TrashFill /> Option
+                        </Button>
                       </div>
-                      <div className="form-group">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Version"
-                          style={{ height: "50px" }}
-                          value={o.version}
-                          onChange={(e) =>
-                            handleOptionChange(index, "version", e.target.value)
-                          }
-                          required
-                        />
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="number"
-                          className="form-control"
-                          placeholder="Price"
-                          style={{ height: "50px" }}
-                          value={o.price}
-                          onChange={(e) =>
-                            handleOptionChange(index, "price", e.target.value)
-                          }
-                          required
-                        />
-                      </div>
-                      <Button
-                        type="button"
-                        className="btn btn-danger mb-2"
-                        onClick={() => removeOption(index)}
-                      >
-                        <TrashFill /> Option
-                      </Button>
-                    </div>
-                  ))}
-                  <Button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={addOption}
-                  >
-                    <PlusSquareFill /> Option
-                  </Button>
+                    ))}
+                    <Button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={addOption}
+                    >
+                      <PlusSquareFill /> Option
+                    </Button>
                   </div>
                 </Col>
                 <Col md={5}>
@@ -468,4 +448,4 @@ const AddProduct = (props) => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

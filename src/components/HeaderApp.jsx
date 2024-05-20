@@ -2,9 +2,13 @@ import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import {
+  ArrowRepeat,
+  BoxArrowInRight,
   EnvelopeFill,
   GeoAltFill,
+  GraphUpArrow,
   PersonCircle,
+  PersonVcard,
   TelephoneFill,
 } from "react-bootstrap-icons";
 import Box from "@mui/material/Box";
@@ -16,7 +20,23 @@ import MenuItem from "@mui/material/MenuItem";
 import UserProfile from "../screens/UserProfile";
 
 const HeaderApp = () => {
-  const settings = ["Profile", "Logout", "Change Password"];
+  const settings = [
+    {
+      name: "Profile",
+      icon: <PersonVcard style={{ fontSize: "20px", marginRight: "10px" }} />,
+    },
+    {
+      name: "Logout",
+      icon: (
+        <BoxArrowInRight style={{ fontSize: "20px", marginRight: "10px" }} />
+      ),
+    },
+    {
+      name: "Change Password",
+      icon: <ArrowRepeat style={{ fontSize: "20px", marginRight: "10px" }} />,
+    },
+  ];
+
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const nav = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
@@ -47,42 +67,34 @@ const HeaderApp = () => {
     handleCloseUserMenu();
   };
   if (user && user.role === 1) {
-    settings.push("DashBoard");
+    settings.push({
+      name: "DashBoard",
+      icon: <GraphUpArrow style={{ fontSize: "20px", marginRight: "10px" }} />,
+    });
   }
   return (
     <Container fluid>
       <div>
         <Row className="header">
-          <Col md={6} xs={12} sm={6} className="header-item d-flex text-white">
-            <Col md={4} sm={4} xs={4}>
+          <Col md={7} xs={12} sm={6} className="header-item d-flex text-white mt-1">
+            <Col md={6} sm={4} xs={4}>
               <TelephoneFill style={{ color: "red" }} /> {user.phone}
             </Col>
-            <Col md={4} sm={4} xs={4}>
+            <Col md={6} sm={4} xs={4}>
               <EnvelopeFill style={{ color: "red" }} /> {user.email}
-            </Col>
-            <Col md={4} sm={4} xs={4}>
-              <GeoAltFill style={{ color: "red" }} /> Ha-Noi
             </Col>
           </Col>
           <Col
-            md={6}
+            md={5}
             sm={6}
             xs={12}
-            className="header-item d-flex text-white text-right justify-content-end"
+            className="header-item d-flex text-white text-right justify-content-end mt-1"
           >
             <Col md={4} sm={4} xs={4}>
-              <Link className="text-white link-item" to="/blog">
-                Blog
-              </Link>
+              <GeoAltFill style={{ color: "red" }} /> {user.address}
             </Col>
-            <Col md={4} sm={4} xs={4}>
-              <Link className="text-white link-item" to="/contact">
-                Contact
-              </Link>
-            </Col>
-
             <Col
-              md={3}
+              md={8}
               sm={6}
               xs={12}
               className="d-flex justify-content-center"
@@ -92,9 +104,11 @@ const HeaderApp = () => {
                   <IconButton
                     onClick={handleOpenUserMenu}
                     sx={{ p: 0 }}
-                    style={{ color: "white", marginTop: "6px" }}
+                    style={{ color: "white", marginTop: "1px" }}
                   >
-                    <h6 style={{ fontSize: "16px" }}>{user.full_name ? user.full_name : user.username}</h6>
+                    <h6 style={{ fontSize: "16px" }}>
+                      {user.full_name ? user.full_name : user.username}
+                    </h6>
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -114,24 +128,30 @@ const HeaderApp = () => {
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map((setting) =>
-                    setting === "DashBoard" && user && user.role === 1 ? (
-                      <MenuItem key={setting} onClick={handleDashBoard}>
-                        <Typography textAlign="center">{setting}</Typography>
+                    setting.name === "DashBoard" && user && user.role === 1 ? (
+                      <MenuItem key={setting.name} onClick={handleDashBoard}>
+                        {setting.icon}
+                        <Typography textAlign="center">
+                          {setting.name}
+                        </Typography>
                       </MenuItem>
                     ) : (
                       <MenuItem
-                        key={setting}
+                        key={setting.name}
                         onClick={
-                          setting === "Logout"
+                          setting.name === "Logout"
                             ? handleLogout
-                            : setting === "Profile"
+                            : setting.name === "Profile"
                             ? handleProfile
-                            : setting === "Change Password"
+                            : setting.name === "Change Password"
                             ? handleChangePass
                             : handleCloseUserMenu
                         }
                       >
-                        <Typography textAlign="center">{setting}</Typography>
+                        {setting.icon}
+                        <Typography textAlign="center">
+                          {setting.name}
+                        </Typography>
                       </MenuItem>
                     )
                   )}

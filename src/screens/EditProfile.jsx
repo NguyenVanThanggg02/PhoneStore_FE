@@ -86,7 +86,7 @@ const EditProfile = () => {
       style={{ display: "block", position: "initial" }}
     >
       <Row className="mt-3" style={{ border: "solid #CCC 1px", margin:"20px", boxShadow:'5px 10px 10px 5px #C0C0C0', borderRadius:'20px' }}>
-        <BreadCrumb model={items} home={home}  style={{marginTop:'15px'}}/>
+      <BreadCrumb model={items} home={home} style={{ marginTop: "15px", border:'none', backgroundColor:'transparent' }} />
       </Row>
       <Modal.Dialog>
         <Modal.Header style={{ background: "#eee" }}>

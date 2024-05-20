@@ -3,9 +3,10 @@ import { Button, Card, Col, Container, FormSelect, Row } from "react-bootstrap";
 import { CartDashFill, HouseHeartFill, Search } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { BreadCrumb } from "primereact/breadcrumb";
-import { Dropdown } from "primereact/dropdown";
+import { Paginator } from "primereact/paginator"; // Import Paginator
 import axios from "axios";
 import { toast } from "react-toastify";
+import "../style/listpro.css";
 
 const ListProduct = () => {
   const [listproduct, setListProduct] = useState([]);
@@ -13,11 +14,14 @@ const ListProduct = () => {
   const [search, setSearch] = useState("");
   const [noResult, setNoResult] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState(null);
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(12);
+  const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
     fetch("http://localhost:9999/products")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (Array.isArray(data)) {
           setListProduct(data);
         } else {
@@ -29,14 +33,13 @@ const ListProduct = () => {
         setListProduct([]);
       });
   }, []);
+
   useEffect(() => {
     axios
       .get("http://localhost:9999/brands")
       .then((response) => setBrand(response.data))
       .catch((error) => console.error("Error fetching brands:", error));
   }, []);
-
- 
 
   const loadData = async () => {
     try {
@@ -57,7 +60,6 @@ const ListProduct = () => {
       toast.error("Lỗi khi load dữ liệu");
     }
   };
-
 
   const handleSearch = () => {
     loadData();
@@ -81,7 +83,7 @@ const ListProduct = () => {
     }
   };
 
-    const getProductByBrand = async (selectedBrandId) => {
+  const getProductByBrand = async (selectedBrandId) => {
     try {
       let response;
       if (selectedBrandId) {
@@ -97,16 +99,23 @@ const ListProduct = () => {
     }
   };
 
+  const onPageChange = (event) => {
+    setFirst(event.first);
+    setCurrentPage(event.page + 1);
+    setRows(event.rows);
+  };
+
   const items = [
     {
       label: (
         <span style={{ color: "gray", marginLeft: "-80px", fontSize: "19px" }}>
-          Danh sách sản phẩm
+          𝓓𝓪𝓷𝓱 𝓼á𝓬𝓱 𝓼ả𝓷 𝓹𝓱ẩ𝓶
         </span>
       ),
       url: "http://localhost:3000/listproduct",
     },
   ];
+
   const home = {
     icon: (
       <HouseHeartFill
@@ -121,6 +130,8 @@ const ListProduct = () => {
     url: "http://localhost:3000",
   };
 
+  const productsOnPage = listproduct.slice(first, first + rows); // Danh sách sản phẩm trên trang hiện tại
+
   return (
     <Container fluid>
       <Row
@@ -130,7 +141,7 @@ const ListProduct = () => {
       >
         <input
           type="text"
-          placeholder="Find by name"
+          placeholder="Tìm kiếm theo tên"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           style={{
@@ -156,25 +167,8 @@ const ListProduct = () => {
             borderRadius: "10px",
           }}
         >
-          <Search /> Search
+          <Search /> Tìm kiếm
         </Button>
-        {/* <Dropdown
-          options={brand.map((item) => ({
-            label: item.hangSanXuat,
-            value: item._id,
-          }))}
-          optionLabel="label"
-          style={{
-           height: "50px",
-            width: "19%",
-            padding: "10px 5px 0 10px",
-            border: "solid #CCC 1px",
-            margin: "20px",
-            boxShadow: "5px 10px 10px 5px #E0EEE0",
-            borderRadius: "10px",
-          }}
-          placeholder="Brands"
-        /> */}
 
         <FormSelect
           className="items_option"
@@ -187,15 +181,17 @@ const ListProduct = () => {
             boxShadow: "5px 10px 10px 5px #E0EEE0",
             borderRadius: "10px",
           }}
-          onChange={ handleChooseBrand}
+          onChange={handleChooseBrand}
         >
           <option value="0">Tất cả</option>
-
           {brand.map((b) => (
-            <option key={b._id} value={b._id}>{b.hangSanXuat}</option>
+            <option key={b._id} value={b._id}>
+              {b.hangSanXuat}
+            </option>
           ))}
         </FormSelect>
       </Row>
+
       <Row
         className="mt-3"
         style={{
@@ -205,8 +201,9 @@ const ListProduct = () => {
           borderRadius: "20px",
         }}
       >
-        <BreadCrumb model={items} home={home} style={{ marginTop: "15px" }} />
+        <BreadCrumb model={items} home={home} style={{ marginTop: "15px", border:'none', backgroundColor:'transparent' }} />
       </Row>
+
       <Row
         className="d-flex justify-content-start mt-4 mb-4"
         style={{ margin: "5px" }}
@@ -216,7 +213,7 @@ const ListProduct = () => {
             <h6 style={{ margin: "20px" }}>Không có sản phẩm nào !!!</h6>
           </Col>
         ) : (
-          listproduct.map((product) => (
+          productsOnPage.map((product) => (
             <Col key={product._id} md={3} sm={6} xs={12} className="mb-4">
               <Card
                 style={{
@@ -225,7 +222,7 @@ const ListProduct = () => {
                 }}
               >
                 <Link to={"/details/" + product._id} className="text-dark">
-                  <Card.Img variant="top" src={product.images[0]} />
+                  <Card.Img variant="top" src={product.images[0]}  />
                   <Card.Body className="text-center">
                     <Card.Text>{product.brand.hangSanXuat}</Card.Text>
                     <Card.Title>{product.name}</Card.Title>
@@ -237,13 +234,28 @@ const ListProduct = () => {
                     <CartDashFill
                       style={{ color: "white", fontSize: "30px" }}
                     />
-                    ADD TO CART
+                    THÊM VÀO GIỎ
                   </Button>
                 </Card.Footer>
               </Card>
             </Col>
           ))
         )}
+      </Row>
+
+      <Row
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <Paginator
+          first={first}
+          rows={rows}
+          totalRecords={listproduct.length}
+          onPageChange={onPageChange}
+        />
       </Row>
     </Container>
   );

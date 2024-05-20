@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import "../style/similarproduct.css";
 
 const SimilarProduct = ({ product }) => {
   const [similarProducts, setSimilarProducts] = useState([]);

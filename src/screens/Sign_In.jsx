@@ -14,6 +14,7 @@ import {
 } from "react-bootstrap-icons";
 import { BreadCrumb } from "primereact/breadcrumb";
 import logo from "../../src/assets/images/logo.jpg";
+import "../style/sign_in.css";
 
 const Sign_In = ({ handleLogin }) => {
   const [email, setEmail] = useState("");
@@ -90,7 +91,7 @@ const Sign_In = ({ handleLogin }) => {
   return (
     <Container fluid>
       <Row className="mt-3" style={{ border: "solid #CCC 1px", margin:"20px", boxShadow:'5px 10px 10px 5px #C0C0C0', borderRadius:'20px' }}>
-        <BreadCrumb model={items} home={home}  style={{marginTop:'15px'}}/>
+      <BreadCrumb model={items} home={home} style={{ marginTop: "15px", border:'none', backgroundColor:'transparent' }} />
       </Row>
       <Row
         className="justify-content-center align-items-center"
