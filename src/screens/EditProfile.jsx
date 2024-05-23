@@ -85,8 +85,24 @@ const EditProfile = () => {
       className="modal show"
       style={{ display: "block", position: "initial" }}
     >
-      <Row className="mt-3" style={{ border: "solid #CCC 1px", margin:"20px", boxShadow:'5px 10px 10px 5px #C0C0C0', borderRadius:'20px' }}>
-      <BreadCrumb model={items} home={home} style={{ marginTop: "15px", border:'none', backgroundColor:'transparent' }} />
+      <Row
+        className="mt-3"
+        style={{
+          border: "solid #CCC 1px",
+          margin: "20px",
+          boxShadow: "5px 10px 10px 5px #C0C0C0",
+          borderRadius: "20px",
+        }}
+      >
+        <BreadCrumb
+          model={items}
+          home={home}
+          style={{
+            marginTop: "15px",
+            border: "none",
+            backgroundColor: "transparent",
+          }}
+        />
       </Row>
       <Modal.Dialog>
         <Modal.Header style={{ background: "#eee" }}>
@@ -176,7 +192,7 @@ const EditProfile = () => {
                   <Form.Control
                     type="text"
                     required
-                    value={editProfile.birthday}
+                    value={formatDate(editProfile.birthday)}
                     onChange={(e) =>
                       setEditProfile({
                         ...editProfile,
@@ -207,8 +223,8 @@ const EditProfile = () => {
                   >
                     <option value="">Select Gender</option>
 
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
+                    <option value="male">male</option>
+                    <option value="female">female</option>
                   </Form.Select>
                   <p style={{ color: "red" }}></p>
                 </Form.Group>

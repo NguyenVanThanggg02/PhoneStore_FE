@@ -24,6 +24,8 @@ import ChangePassWord from "./screens/ChangePass";
 import Contact from "./screens/Contact";
 import Blog from "./screens/Blog";
 import DashBoard from "./DashBoard/Admin/DashBoard";
+import ForgotPassword from "./screens/ForgotPassWord";
+import ResetpassWord from "./screens/ResetPassword";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -81,6 +83,8 @@ function App() {
           <Route path="/listproduct" element={<ListProduct/>} />
           <Route path="/changepass" element={<ChangePassWord/>} />
           <Route path="/dashboard" element={<DashBoard/>} />
+          <Route path="/forgot-password" element={<ForgotPassword/>} />
+          <Route path="/reset-password/:id" element={<ResetpassWord/>} />
         </Routes>
         <Footer />
         <ToastContainer />
