@@ -14,6 +14,8 @@ import SimilarProduct from "./SimilarProduct";
 import { useParams } from "react-router-dom";
 import { BreadCrumb } from "primereact/breadcrumb";
 import Comments from "../screens/Comments";
+import "../style/detail.css";
+
 
 const Details = () => {
   const { pid } = useParams();
@@ -79,7 +81,7 @@ const Details = () => {
     {
       label: (
         <span style={{ color: "gray", marginLeft: "-80px", fontSize: "19px" }}>
-          Danh sách sản phẩm
+         𝓓𝓪𝓷𝓱 𝓼á𝓬𝓱 𝓼ả𝓷 𝓹𝓱ẩ𝓶
         </span>
       ),
       url: "http://localhost:3000/listproduct",
@@ -88,7 +90,7 @@ const Details = () => {
     {
       label: (
         <span style={{ color: "gray", marginLeft: "-80px", fontSize: "19px" }}>
-          Chi tiết sản phẩm
+          𝓒𝓱𝓲 𝓽𝓲ế𝓽 𝓼ả𝓷 𝓹𝓱ẩ𝓶
         </span>
       ),
     },
@@ -116,7 +118,7 @@ const Details = () => {
   return (
     <Container fluid >
       <Row className="mt-3" style={{ border: "solid #CCC 1px", margin:"20px", boxShadow:'5px 10px 10px 5px #C0C0C0', borderRadius:'20px' }}>
-        <BreadCrumb model={items} home={home}  style={{marginTop:'15px'}}/>
+      <BreadCrumb model={items} home={home} style={{ marginTop: "15px", border:'none', backgroundColor:'transparent' }} />
       </Row>
       <Row className=" mt-5 bg-light" style={{margin:"20px",  boxShadow:'5px 10px 10px 5px #C0C0C0', borderRadius:"20px"}}>
         <Col md={4}>

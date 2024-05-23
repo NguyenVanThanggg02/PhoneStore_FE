@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { EnvelopeFill, GeoAltFill, TelephoneFill } from 'react-bootstrap-icons';
+import "../style/footer.css";
 
 const Footer = () => {
     return (

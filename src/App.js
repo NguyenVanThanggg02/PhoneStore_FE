@@ -1,17 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
-import "./style/header.css";
-import "./style/banner.css";
-import "./style/footer.css";
-import "./style/home.css";
-import "./style/store.css";
-import "./style/checkout.css";
-import "./style/detail.css";
-import "./style/detail.css";
-import "./style/sign_in.css";
-import "./style/sign_up.css";
-import "./style/listpro.css";
-import "./style/similarproduct.css";
+// import "./style/store.css";
+// import "./style/checkout.css";
 
 import Header from "./components/Header";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -31,6 +21,9 @@ import { ToastContainer } from "react-toastify";
 import HeaderApp from "./components/HeaderApp";
 import ListProduct from "./Models/ListProduct";
 import ChangePassWord from "./screens/ChangePass";
+import Contact from "./screens/Contact";
+import Blog from "./screens/Blog";
+import DashBoard from "./DashBoard/Admin/DashBoard";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -74,6 +67,8 @@ function App() {
             }
           />
           <Route path="/store" element={<Store />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/details/:pid" element={<Details />} />
           <Route path="/checkout" element={<CheckOut />} />
           <Route
@@ -85,6 +80,7 @@ function App() {
           <Route path="/profile/editprofile" element={<EditProfile />} />
           <Route path="/listproduct" element={<ListProduct/>} />
           <Route path="/changepass" element={<ChangePassWord/>} />
+          <Route path="/dashboard" element={<DashBoard/>} />
         </Routes>
         <Footer />
         <ToastContainer />

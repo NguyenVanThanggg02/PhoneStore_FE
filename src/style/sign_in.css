@@ -1,110 +1,167 @@
+.form_container {
+  width: 700px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 50px 40px 20px 40px;
+  background-color: #ffffff;
+  box-shadow: 0px 106px 42px rgba(0, 0, 0, 0.01),
+    0px 59px 36px rgba(0, 0, 0, 0.05), 0px 26px 26px rgba(0, 0, 0, 0.09),
+    0px 7px 15px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 11px;
+  font-family: "Inter", sans-serif;
+  /* position: fixed; */
+  /* top: 50%;
+  left: 50%; */
+  /* transform: translate(-50%, -50%); */
+}
 
-*{
+.logo_container {
+  box-sizing: border-box;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(
+    180deg,
+    rgba(248, 248, 248, 0) 50%,
+    #f8f8f888 100%
+  );
+  border: 1px solid #f7f7f8;
+  filter: drop-shadow(0px 0.5px 0.5px #efefef)
+    drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
+  border-radius: 11px;
+}
+
+.title_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.title {
   margin: 0;
-  padding: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #212121;
+}
 
-}
-.sign-in{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  width: 100%;
-  background: url("https://c0.wallpaperflare.com/preview/471/747/721/space-black-apple-watch-over-black-iphone-x.jpg")no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-.form-box-login{
-  position: relative;
-  width: 400px;
-  height: 450px;
-  background: transparent;
-  border:2px solid rgba(255, 255, 255, 0.5) ;
-  border-radius: 20px;
-  backdrop-filter: blur(15px ) ;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-}
-h2{
-  font-size: 2em;
-  color: white;
+.subtitle {
+  font-size: 0.725rem;
+  max-width: 80%;
   text-align: center;
-}
-.inputbox-login{
-  position: relative;
-  margin: 30px 0;
-  width: 310px;
-  border-bottom: 2px solid #fff;
-  
-}
-.inputbox-login label{
-  position: absolute;
-  top: 50%;
-  left: 5px;
-  transform: translateY(-50%);
-  color: #fff;
-  font-size: 1em;
-  pointer-events: none;
-  transition: .5s;
-}
-input:focus ~ label, 
-input:valid ~ label{
-  top: -5px;
+  line-height: 1.1rem;
+  color: #8b8e98;
 }
 
-.inputbox-login input{
+.input_container {
   width: 100%;
-  height: 50px;
-  background: transparent;
-  border: none;
-  outline: none;
-  font-size: 1em;
-  padding: 0 35px 0 5px;
-  color: #fff;
+  height: fit-content;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
-.icon{
+
+.icon {
+  width: 20px;
   position: absolute;
-  right: 8px;
-  color: #fff;
-  font-size: 1.2em;
-  top: 20px;
+  z-index: 99;
+  left: 12px;
+  bottom: 9px;
 }
-.btn-login button{
+
+.input_label {
+  font-size: 0.75rem;
+  color: #8b8e98;
+  font-weight: 600;
+}
+
+.input_field {
+  width: auto;
+  height: 40px;
+  padding: 0 0 0 40px;
+  border-radius: 7px;
+  outline: none;
+  border: 1px solid #e5e5e5;
+  filter: drop-shadow(0px 1px 0px #efefef)
+    drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
+  transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+.input_field:focus {
+  border: 1px solid transparent;
+  box-shadow: 0px 0px 0px 2px #242424;
+  background-color: transparent;
+}
+
+.sign-in_btn {
   width: 100%;
   height: 40px;
-  border-radius: 40px;
-  background: #fff;
-  border: none;
+  border: 0;
+  background: #333;
+  border-radius: 7px;
   outline: none;
+  color: #ffffff;
   cursor: pointer;
-  font-size: 1em;
-  font-weight: 650;
 }
-.forget {
-  margin: -15px 0 15px;
-  font-size: .9em;
-  color: #fff;
+
+.sign-in_ggl {
+  width: 100%;
+  height: 40px;
   display: flex;
+  align-items: center;
   justify-content: center;
+  gap: 10px;
+  background: #ffffff;
+  border-radius: 7px;
+  outline: none;
+  color: #242424;
+  border: 1px solid #e5e5e5;
+  filter: drop-shadow(0px 1px 0px #efefef)
+    drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
+  cursor: pointer;
+}
 
+.sign-in_apl {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #212121;
+  border-radius: 7px;
+  outline: none;
+  color: #ffffff;
+  border: 1px solid #e5e5e5;
+  filter: drop-shadow(0px 1px 0px #efefef)
+    drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
+  cursor: pointer;
 }
-.forget  input label{
-  margin-right: 3px;
+
+.separator {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  color: #8b8e98;
 }
-.register{
-  font-size: .9em;
-  color: #fff;
-  text-align: center;
-  margin: 25px 0 10px;
+
+.separator .line {
+  display: block;
+  width: 100%;
+  height: 1px;
+  border: 0;
+  background-color: #e8e8e8;
 }
-.register p a{
- text-decoration: none;
- color: #fff;
- font-weight: 650;
-}
-.register p a:hover{
+
+.note {
+  font-size: 0.75rem;
+  color: #8b8e98;
   text-decoration: underline;
-
 }

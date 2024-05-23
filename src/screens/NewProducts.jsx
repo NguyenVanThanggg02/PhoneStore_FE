@@ -21,10 +21,10 @@ const NewProducts = () => {
   return (
     <Container fluid>
       <Row className="new-products">
-        <Col md={6} className="text-left">
+        <Col md={12} className="text-left text-center">
           <h3 style={{margin:'20px'}}>New Products</h3>
         </Col>
-        <Col md={6} className=" d-flex justify-content-end">
+        {/* <Col md={6} className=" d-flex justify-content-end">
           <Row>
             <Col>
               <h5>Iphone</h5>
@@ -36,7 +36,7 @@ const NewProducts = () => {
               <h5>Oppo</h5>
             </Col>
           </Row>
-        </Col>
+        </Col> */}
       </Row>
       <Row className=" new-products-item d-flex justify-content-between" style={{margin:'10px'}}>
       {newProduct.map((product) => (

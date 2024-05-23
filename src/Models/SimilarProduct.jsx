@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import "../style/similarproduct.css";
 
 const SimilarProduct = ({ product }) => {
   const [similarProducts, setSimilarProducts] = useState([]);
@@ -41,8 +42,8 @@ const SimilarProduct = ({ product }) => {
         borderRadius: "20px",
       }}
     >
-      <Row>
-        <h3 style={{ margin: "20px" }}>Sản phẩm Tương Tự</h3>
+      <Row style={{ display:'flex', justifyContent:'center'}}>
+        <h3 style={{ margin: "20px", display:'flex', justifyContent:'center' }}>Sản phẩm Tương Tự</h3>
       </Row>
       <Row>
         {similarProducts.slice(0, 4).map((s) => (
