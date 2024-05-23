@@ -198,6 +198,9 @@ const Sign_In = ({ handleLogin }) => {
                   }}
                 />
               </div>
+              <div>
+                <Link to={'/forgot-password'}>Forgot Password</Link>
+              </div>
               <Button variant="dark" className="sign-in_btn mb-3 mt-2" type="submit">
                 Sign In
               </Button>
