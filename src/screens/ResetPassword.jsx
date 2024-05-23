@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -15,7 +15,7 @@ const ResetpassWord = () => {
       .post(`http://localhost:9999/users/reset-password/${id} `, { password })
       .then((res) => {
         if (res.data.Status === "Success") {
-            toast.success("Success")
+          toast.success("Success");
           navigate("/sign_in");
         }
       })
