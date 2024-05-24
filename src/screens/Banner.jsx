@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Col, Container, Image, Nav, Row } from "react-bootstrap";
 import { Cart3, CartDashFill } from "react-bootstrap-icons";
 import logo from "../../src/assets/images/logo.jpg";
 import "../style/banner.css";
-
+import Cart from "./Cart";
 
 const Banner = () => {
+  const [visible, setVisible] = useState(false);
   return (
     <Container fluid className="Banner">
       <Row>
@@ -18,7 +19,7 @@ const Banner = () => {
           <a href="/" className="text-white" style={{ marginTop: "-15px" }}>
             <img
               src={logo}
-              style={{ width: "96px", borderRadius: "50%", height: "93px" }}
+              style={{ width: "100%", borderRadius: "50%", height: "93px" }}
             />
           </a>
         </Col>
@@ -61,13 +62,20 @@ const Banner = () => {
           md={2}
           xs={12}
           sm={6}
+          style={{cursor:'pointer'}}
           className="text-right d-flex justify-content-center align-items-center"
+          onClick={() => setVisible(true)}
         >
           <CartDashFill
             style={{ color: "white", fontSize: "30px", marginTop: "-15px" }}
           />
         </Col>
       </Row>
+
+      {visible === true && (
+        <Cart visible={visible} setVisible={setVisible} />
+      )}
+
     </Container>
   );
 };
