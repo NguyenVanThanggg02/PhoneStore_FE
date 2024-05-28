@@ -17,8 +17,9 @@ const Home = () => {
         console.log(data);
         if (Array.isArray(data)) {
           // Lọc và chỉ lấy ra một sản phẩm của mỗi hãng sản xuất
-          const uniqueProducts = getUniqueProducts(data, "brand");
+          const uniqueProducts = getUniqueProducts(data, "hangSanXuat");
           setListProduct(uniqueProducts);
+          console.log(data);
         } else {
           setListProduct([]);
         }
@@ -34,21 +35,17 @@ const Home = () => {
     const uniqueProducts = [];
     const uniqueKeys = [];
     products.forEach((product) => {
-        if (!uniqueKeys.includes(product[key])) {
-            uniqueKeys.push(product[key]);
-            uniqueProducts.push(product);
-        }
+      if (!uniqueKeys.includes(product[key])) {
+        uniqueKeys.push(product[key]);
+        uniqueProducts.push(product);
+      }
     });
     return uniqueProducts;
-};
+  };
 
   return (
     <Container fluid>
-      {/* <Row style={{marginTop:'20px'}}>
-        <SliderBanner />
-      </Row> */}
-
-     
+      <SliderBanner />
 
       <Row
         className="d-flex justify-content-between mt-4 mb-4"

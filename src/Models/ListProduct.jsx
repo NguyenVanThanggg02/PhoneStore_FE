@@ -17,6 +17,7 @@ const ListProduct = () => {
   const [first, setFirst] = useState(0);
   const [rows, setRows] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     fetch("http://localhost:9999/products")
@@ -104,6 +105,40 @@ const ListProduct = () => {
     setCurrentPage(event.page + 1);
     setRows(event.rows);
   };
+
+  const addToCart = async (productId) => {
+    try {
+      const userId = user; // assuming user ID is retrieved correctly
+      const quantity = 1; // default quantity to add
+  
+      // Fetch the current cart for the user
+      const response = await axios.get(`http://localhost:9999/cart/${userId._id}`);
+      const cartItems = response.data;
+  
+      // Check if the product is already in the cart
+      const existingCartItem = cartItems.find(item => item.productId._id === productId);
+  
+      if (existingCartItem) {
+        // Product exists, update its quantity
+        const updatedQuantity = existingCartItem.quantity + quantity;
+        await axios.put(`http://localhost:9999/cart/${existingCartItem._id}`, {
+          quantity: updatedQuantity,
+        });
+        toast.success("Sản phẩm đã được cập nhật số lượng trong giỏ hàng!");
+      } else {
+        // Product does not exist, add it to the cart
+        await axios.post("http://localhost:9999/cart", {
+          userId,
+          productId,
+          quantity,
+        });
+        toast.success("Sản phẩm đã được thêm vào giỏ hàng!");
+      }
+    } catch (error) {
+      toast.error("Lỗi khi thêm sản phẩm vào giỏ hàng: " + error.toString());
+    }
+  };
+  
 
   const items = [
     {
@@ -230,7 +265,7 @@ const ListProduct = () => {
                   </Card.Body>
                 </Link>
                 <Card.Footer className="text-center bg-white">
-                  <Button className="btn btn-danger">
+                  <Button className="btn btn-danger" onClick={() => addToCart(product._id)}>
                     <CartDashFill
                       style={{ color: "white", fontSize: "30px" }}
                     />
