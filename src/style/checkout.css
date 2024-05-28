@@ -8,7 +8,9 @@
     border: solid 1px rgb(184, 179, 179);
     border-radius:20px ;
     background-color: rgb(245, 237, 237);
+    height: 350px;
 }
+
 .order-summary {
     display: flex;
     flex-direction: column;
@@ -30,4 +32,9 @@
   }
 .form-group input{
   border-radius: 15px;
+  height: 45px;
+}
+.checkout_item{
+  border-radius: 50px;
+  margin-bottom: 20px;
 }

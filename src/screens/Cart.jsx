@@ -1,40 +1,92 @@
+import React, { useEffect, useState } from "react";
 import { Dialog } from "primereact/dialog";
-import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import {
-  PlusSquareFill,
-  Trash,
-  Trash3Fill,
-  WalletFill,
-  X,
-} from "react-bootstrap-icons";
+import { Trash, WalletFill, X } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Cart = (props) => {
   const { visible, setVisible } = props;
+  const [listCart, setListCart] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:9999/cart/${user._id}`)
+      .then((res) => {
+        setListCart(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, [user._id]);
+
+  const handleDelete = (index) => {
+    if (window.confirm("Are you sure you want to delete" + index + "?")) {
+      axios
+        .delete("http://localhost:9999/cart/" + index)
+        .then(() => {
+          toast.success("Cart updated successfully");
+          setListCart(listCart.filter((t) => t._id !== index));
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
+  };
+
+  const updateQuantity = (index, newQuantity) => {
+    const updatedCart = [...listCart];
+    updatedCart[index].quantity = newQuantity;
+    setListCart(updatedCart);
+  };
+
+  const calculateTotal = () => {
+    let total = 0;
+    listCart.forEach((item) => {
+      total += item.quantity * item.productId.option[0].price;
+    });
+    return total;
+  };
+
+  const formatCurrency = (value) => {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
 
   const onHide = () => {
+    setVisible(false);
+  };
+
+  const handleCheckout = () => {
     setVisible(false);
   };
 
   const dialogFooter = (
     <div style={{ margin: "20px" }}>
       <div style={{ display: "flex", justifyContent: "start" }}>
-        <h4>Total: 9.000.000</h4>
+        <h5>Total: {formatCurrency(calculateTotal()) + " VND"}</h5>
       </div>
-
-      <Button onClick={onHide} className="btn btn-success">
-        <WalletFill
-          style={{ fontSize: "22px", color: "white", marginRight: "7px" }}
-        />
-        Check Out
+      <Link to={"/checkout"}>
+        <Button className="btn btn-success" onClick={handleCheckout}>
+          <WalletFill
+            style={{ fontSize: "22px", color: "white", marginRight: "7px" }}
+          />
+          Check Out
+        </Button>
+      </Link>
+      <Button onClick={onHide} className="btn btn-danger">
+        <X style={{ fontSize: "22px" }} />
+        Close
       </Button>
     </div>
   );
+
   return (
     <div>
       <Dialog
         visible={visible}
-        onHide={() => setVisible(false)}
+        onHide={onHide}
         footer={dialogFooter}
         className="bg-light"
         style={{ width: "70vw" }}
@@ -52,60 +104,53 @@ const Cart = (props) => {
                         <th style={{ width: "15%" }}>Image</th>
                         <th style={{ width: "25%" }}>Product</th>
                         <th style={{ width: "20%" }}>Price</th>
+                        <th style={{ width: "20%" }}>Version</th>
+                        <th style={{ width: "20%" }}>Color</th>
                         <th style={{ width: "15%" }}>Quantity</th>
                         <th style={{ width: "25%" }}>Total</th>
                         <th style={{ width: "25%" }}>Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td style={{ display: "flex", textAlign: "center" }}>
-                          <img
-                            src="https://cdn.hoanghamobile.com/i/preview/Uploads/2020/11/06/apple-iphone-12-mini-2.png"
-                            alt="image"
-                            style={{ width: "100px", height: "auto" }}
-                          />
-                        </td>
-                        <td>Iphone 12</td>
-                        <td>9.000.000</td>
-                        <td>
-                          <input type="number" min="1" />
-                        </td>
-                        <td>9.000.000</td>
-                        <td>
-                          <Trash
-                            style={{
-                              color: "red",
-                              fontSize: "25px",
-                              cursor: "pointer",
-                            }}
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <img
-                            src="https://onewaymobile.vn/images/products/2022/07/08/original/iphone-12-promax-oneway_1657260526.png"
-                            alt="image"
-                            style={{ width: "100px", height: "auto" }}
-                          />
-                        </td>
-                        <td>Iphone 12 Pro Max</td>
-                        <td>17.000.000</td>
-                        <td>
-                          <input type="number" min="1" />
-                        </td>
-                        <td>17.000.000</td>
-                        <td>
-                          <Trash
-                            style={{
-                              color: "red",
-                              fontSize: "25px",
-                              cursor: "pointer",
-                            }}
-                          />
-                        </td>
-                      </tr>
+                      {listCart.map((item, index) => (
+                        <tr key={item._id}>
+                          <td style={{ display: "flex", textAlign: "center" }}>
+                            <img
+                              src={item.productId.images[0]}
+                              alt="image"
+                              style={{
+                                width: "100px",
+                                height: "auto",
+                                verticalAlign: "middle",
+                              }}
+                            />
+                          </td>
+                          <td style={{ verticalAlign: "middle" }}>{item.productId.name}</td>
+                          <td style={{ verticalAlign: "middle" }}>{formatCurrency(item.productId.option[0].price) + " VND"}</td>
+                          <td style={{ verticalAlign: "middle" }}>{item.productId.option[0].version}</td>
+                          <td style={{ verticalAlign: "middle" }}>{item.productId.option[0].color}</td>
+                          <td style={{ verticalAlign: "middle" }}>
+                            <input
+                              type="number"
+                              min="1"
+                              style={{ width: '50px' }}
+                              value={item.quantity}
+                              onChange={(e) => updateQuantity(index, parseInt(e.target.value))}
+                            />
+                          </td>
+                          <td style={{ verticalAlign: "middle" }}>{formatCurrency(item.quantity * item.productId.option[0].price) + " VND"}</td>
+                          <td style={{ verticalAlign: "middle" }}>
+                            <Trash
+                              style={{
+                                color: "red",
+                                fontSize: "25px",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => handleDelete(item._id)}
+                            />
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

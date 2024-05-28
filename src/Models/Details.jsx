@@ -23,6 +23,10 @@ const Details = () => {
   const [version, setVersion] = useState([]); // Initialize as empty array
   const [color, setColor] = useState([]);
   const [images, setImages] = useState([]);
+  const [selectedButton, setSelectedButton] = useState(null);
+  const [selectedButtonColor, setSelectedButtonColor] = useState(null);
+
+
   useEffect(() => {
     fetch(`http://localhost:9999/products/${pid}`)
       .then((resp) => resp.json())
@@ -52,8 +56,7 @@ const Details = () => {
       numVisible: 1,
     },
   ];
-  const [selectedButton, setSelectedButton] = useState(null);
-  const [selectedButtonColor, setSelectedButtonColor] = useState(null);
+
 
   const handleButtonClick = (index) => {
     setSelectedButton(index);
@@ -132,7 +135,7 @@ const Details = () => {
                 <img src={item} alt="aa" style={{ width: "100%" }} />
               )}
               thumbnail={(item) => (
-                <img src={item} alt="aaa" style={{ width: "100%" }} />
+                <img src={item} alt="aaa" style={{ width: "100%",height:'98px' }} />
               )}
             />
           </div>
@@ -278,10 +281,10 @@ const Details = () => {
             <span style={{ fontWeight: "bold" }}>Vi xử lý:</span>
             {product.configuration?.viXuLy}
           </p>
-          <p>
+          {/* <p>
             <span style={{ fontWeight: "bold" }}>Bộ nhớ trong:</span>{" "}
             {product.configuration?.boNhoTrong}
-          </p>
+          </p> */}
           <p>
             <span style={{ fontWeight: "bold" }}>RAM: </span>
             {product.configuration?.ram}
