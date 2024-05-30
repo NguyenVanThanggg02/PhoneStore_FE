@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, FormSelect, Row } from "react-bootstrap";
-import { CartDashFill, HouseHeartFill, Search } from "react-bootstrap-icons";
+import {
+  CartDashFill,
+  CashCoin,
+  HouseHeartFill,
+  Search,
+} from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { BreadCrumb } from "primereact/breadcrumb";
 import { Paginator } from "primereact/paginator"; // Import Paginator
@@ -110,21 +115,29 @@ const ListProduct = () => {
     try {
       const userId = user; // assuming user ID is retrieved correctly
       const quantity = 1; // default quantity to add
-      
-      const productResponse = await axios.get(`http://localhost:9999/products/${productId}`);
+
+      const productResponse = await axios.get(
+        `http://localhost:9999/products/${productId}`
+      );
       const product = productResponse.data;
       const { option, name, images } = product;
       const price = option[0].price;
       const version = option[0].version;
       const color = option[0].color;
 
-
       // Fetch the current cart for the user
-      const response = await axios.get(`http://localhost:9999/cart/${userId._id}`);
+      const response = await axios.get(
+        `http://localhost:9999/cart/${userId._id}`
+      );
       const cartItems = response.data;
-  
+
       // Check if the product is already in the cart
-      const existingCartItem = cartItems.find(item => item.productId._id === productId && item.version === version && item.color === color);
+      const existingCartItem = cartItems.find(
+        (item) =>
+          item.productId._id === productId &&
+          item.version === version &&
+          item.color === color
+      );
       if (existingCartItem) {
         // Product exists, update its quantity
         const updatedQuantity = existingCartItem.quantity + quantity;
@@ -148,7 +161,6 @@ const ListProduct = () => {
       toast.error("Lỗi khi thêm sản phẩm vào giỏ hàng: " + error.toString());
     }
   };
-  
 
   const items = [
     {
@@ -246,7 +258,15 @@ const ListProduct = () => {
           borderRadius: "20px",
         }}
       >
-        <BreadCrumb model={items} home={home} style={{ marginTop: "15px", border:'none', backgroundColor:'transparent' }} />
+        <BreadCrumb
+          model={items}
+          home={home}
+          style={{
+            marginTop: "15px",
+            border: "none",
+            backgroundColor: "transparent",
+          }}
+        />
       </Row>
 
       <Row
@@ -267,20 +287,25 @@ const ListProduct = () => {
                 }}
               >
                 <Link to={"/details/" + product._id} className="text-dark">
-                  <Card.Img variant="top" src={product.images[0]}  />
+                  <Card.Img variant="top" src={product.images[0]} />
                   <Card.Body className="text-center">
                     <Card.Text>{product.brand.hangSanXuat}</Card.Text>
                     <Card.Title>{product.name}</Card.Title>
-                    <Card.Title>{product.option[0]?.price}</Card.Title>
+                    {/* <Card.Title>{product.option[0]?.price}</Card.Title> */}
                   </Card.Body>
                 </Link>
                 <Card.Footer className="text-center bg-white">
-                  <Button className="btn btn-danger" onClick={() => addToCart(product._id)}>
+                  {/* <Button className="btn btn-danger" onClick={() => addToCart(product._id)}>
                     <CartDashFill
                       style={{ color: "white", fontSize: "30px" }}
                     />
                     THÊM VÀO GIỎ
-                  </Button>
+                  </Button> */}
+
+                  <strong style={{ color: "orange" }}>
+                    <CashCoin style={{ fontSize: "30px" }} />{" "}
+                    {product.option[0]?.price}{" "}
+                  </strong>
                 </Card.Footer>
               </Card>
             </Col>
