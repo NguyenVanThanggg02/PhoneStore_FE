@@ -149,7 +149,8 @@ const ProductManagement = () => {
       </Row>
       {visible === true && (
         <AddProduct visible={visible} setVisible={setVisible} />
-      )}{editVisible === true && (
+      )}
+      {editVisible === true && (
         <EditProduct editVisible={editVisible} setEditVisible={setEditVisible} data={dataEdit} />
       )}
     </Container>

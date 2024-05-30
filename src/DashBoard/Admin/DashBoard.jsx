@@ -63,15 +63,15 @@ const DashBoard = () => {
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
           <Row>
             <Col sm={2} className="item" style={{marginLeft:'15px'}} >
-              <Row style={{ display: "flex", justifyContent: "center" }}>
+              <Row style={{ display: "flex", justifyContent: "center", marginBottom:'50px' }}>
                 <img
                   src={logo}
-                  style={{ width: "96px", borderRadius: "50%", height: "93px" }}
+                  style={{ width: "130px", borderRadius: "50%", height: "93px" }}
                 />
               </Row>
-              <Row style={{ display: "flex", justifyContent: "center" }}>
+              {/* <Row style={{ display: "flex", justifyContent: "center" }}>
                 <h4>Thắng Apple</h4>
-              </Row>
+              </Row> */}
               <Row style={{ display: "flex", justifyContent: "center" }}>
                 <Nav variant="pills" className="flex-column">
                   <Nav.Item>
