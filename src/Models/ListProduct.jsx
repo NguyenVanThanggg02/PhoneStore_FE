@@ -110,14 +110,21 @@ const ListProduct = () => {
     try {
       const userId = user; // assuming user ID is retrieved correctly
       const quantity = 1; // default quantity to add
-  
+      
+      const productResponse = await axios.get(`http://localhost:9999/products/${productId}`);
+      const product = productResponse.data;
+      const { option, name, images } = product;
+      const price = option[0].price;
+      const version = option[0].version;
+      const color = option[0].color;
+
+
       // Fetch the current cart for the user
       const response = await axios.get(`http://localhost:9999/cart/${userId._id}`);
       const cartItems = response.data;
   
       // Check if the product is already in the cart
-      const existingCartItem = cartItems.find(item => item.productId._id === productId);
-  
+      const existingCartItem = cartItems.find(item => item.productId._id === productId && item.version === version && item.color === color);
       if (existingCartItem) {
         // Product exists, update its quantity
         const updatedQuantity = existingCartItem.quantity + quantity;
@@ -130,6 +137,9 @@ const ListProduct = () => {
         await axios.post("http://localhost:9999/cart", {
           userId,
           productId,
+          price,
+          version,
+          color,
           quantity,
         });
         toast.success("Sản phẩm đã được thêm vào giỏ hàng!");
