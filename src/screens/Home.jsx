@@ -44,7 +44,7 @@ const Home = () => {
   };
 
   return (
-    <Container fluid>
+    <Container fluid className="p-0">
       <SliderBanner />
 
       <Row

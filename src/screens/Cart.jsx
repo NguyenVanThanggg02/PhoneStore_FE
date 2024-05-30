@@ -15,7 +15,25 @@ const Cart = (props) => {
     axios
       .get(`http://localhost:9999/cart/${user._id}`)
       .then((res) => {
-        setListCart(res.data);
+        const fetchedCart = res.data;
+        const mergedCart = [];
+
+        fetchedCart.forEach((item) => {
+          const existingItemIndex = mergedCart.findIndex(
+            (cartItem) =>
+              cartItem.productId._id === item.productId._id &&
+              cartItem.version === item.version &&
+              cartItem.color === item.color
+          );
+
+          if (existingItemIndex > -1) {
+            mergedCart[existingItemIndex].quantity += item.quantity;
+          } else {
+            mergedCart.push(item);
+          }
+        });
+
+        setListCart(mergedCart);
       })
       .catch((err) => {
         console.log(err.message);
@@ -23,9 +41,9 @@ const Cart = (props) => {
   }, [user._id]);
 
   const handleDelete = (index) => {
-    if (window.confirm("Are you sure you want to delete" + index + "?")) {
+    if (window.confirm("Are you sure you want to delete this item?")) {
       axios
-        .delete("http://localhost:9999/cart/" + index)
+        .delete(`http://localhost:9999/cart/${index}`)
         .then(() => {
           toast.success("Cart updated successfully");
           setListCart(listCart.filter((t) => t._id !== index));
@@ -45,7 +63,7 @@ const Cart = (props) => {
   const calculateTotal = () => {
     let total = 0;
     listCart.forEach((item) => {
-      total += item.quantity * item.productId.option[0].price;
+      total += item.quantity * item.price;
     });
     return total;
   };
@@ -125,20 +143,33 @@ const Cart = (props) => {
                               }}
                             />
                           </td>
-                          <td style={{ verticalAlign: "middle" }}>{item.productId.name}</td>
-                          <td style={{ verticalAlign: "middle" }}>{formatCurrency(item.productId.option[0].price) + " VND"}</td>
-                          <td style={{ verticalAlign: "middle" }}>{item.productId.option[0].version}</td>
-                          <td style={{ verticalAlign: "middle" }}>{item.productId.option[0].color}</td>
+                          <td style={{ verticalAlign: "middle" }}>
+                            {item.productId.name}
+                          </td>
+                          <td style={{ verticalAlign: "middle" }}>
+                            {formatCurrency(item.price) + " VND"}
+                          </td>
+                          <td style={{ verticalAlign: "middle" }}>
+                            {item.version}
+                          </td>
+                          <td style={{ verticalAlign: "middle" }}>
+                            {item.color}
+                          </td>
                           <td style={{ verticalAlign: "middle" }}>
                             <input
                               type="number"
                               min="1"
-                              style={{ width: '50px' }}
+                              style={{ width: "50px" }}
                               value={item.quantity}
-                              onChange={(e) => updateQuantity(index, parseInt(e.target.value))}
+                              onChange={(e) =>
+                                updateQuantity(index, parseInt(e.target.value))
+                              }
                             />
                           </td>
-                          <td style={{ verticalAlign: "middle" }}>{formatCurrency(item.quantity * item.productId.option[0].price) + " VND"}</td>
+                          <td style={{ verticalAlign: "middle" }}>
+                            {formatCurrency(item.quantity * item.price) +
+                              " VND"}
+                          </td>
                           <td style={{ verticalAlign: "middle" }}>
                             <Trash
                               style={{
