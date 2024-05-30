@@ -49,9 +49,9 @@ const CheckOut = () => {
           }}
         />
       </Row>
-      <Container className="bg-light checkout_item" >
+      <Container className="bg-light checkout_item">
         <Row className="mt-4 mb-4">
-          <Col md={7} sm={6} xs={12}>
+          <Col md={6} sm={6} xs={12}>
             <div class="billing-details pt-4">
               <div class="section-title">
                 <h3 class="title pb-4 text-center">Billing address</h3>
@@ -91,58 +91,39 @@ const CheckOut = () => {
               </div>
             </div>
           </Col>
-          <Col md={5} sm={6} xs={12}>
-            <div className="manager-order ">
-              <div class="section-title text-center mt-2 pt-4">
-                <h3 class="title">Your Order</h3>
-              </div>
-              <div class="order-summary mb-3">
-                <div class="d-flex justify-content-between">
-                  <div>
-                    <strong>PRODUCT</strong>
-                  </div>
-                  <div>
-                    <strong>TOTAL</strong>
-                  </div>
+          <Col md={6} sm={6} xs={12}>
+            <div className="text-center pb-4">
+              <h3 className="title">Your Order</h3>
+            </div>
+            <Row className="manager-order text-center">
+              <Col md={5}>
+                <div>
+                  <strong>PRODUCT NAME</strong>
                 </div>
-                <div class="order-products">
-                  <div class="order-col">
-                    <div>1x Product Name Goes Here</div>
-                    <div>$980.00</div>
-                  </div>
-                  <div class="order-col">
-                    <div>2x Product Name Goes Here</div>
-                    <div>$980.00</div>
-                  </div>
+              </Col>
+              <Col md={3}>
+                <div>
+                  <strong>QUANTITY</strong>
                 </div>
-                <div class="order-col">
-                  <div>Shiping</div>
-                  <div>
-                    <strong>FREE</strong>
-                  </div>
+              </Col>
+              <Col md={4}>
+                <div>
+                  <strong>TOTAL</strong>
                 </div>
-                <div class="order-col">
-                  <div>
-                    <strong>TOTAL</strong>
-                  </div>
-                  <div>
-                    <strong class="order-total">$2940.00</strong>
-                  </div>
-                </div>
-              </div>
-              <div className="text-center mb-3">
+              </Col>
+              <Col md={12} className="text-center  mt-auto">
                 <Button
                   className="btn btn-danger"
                   style={{
                     borderRadius: "20px",
-                    width: "70%",
+                    width: "50%",
                     marginTop: "80px",
                   }}
                 >
                   PLACE ORDER
                 </Button>
-              </div>
-            </div>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Container>
