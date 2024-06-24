@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { Button, Col, Row } from "react-bootstrap";
 import { Trash, WalletFill, X } from "react-bootstrap-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -10,6 +10,7 @@ const Cart = (props) => {
   const { visible, setVisible } = props;
   const [listCart, setListCart] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate(); // Use the useNavigate hook
 
   useEffect(() => {
     axios
@@ -41,9 +42,9 @@ const Cart = (props) => {
   }, [user._id]);
 
   const handleDelete = (index) => {
-    if (window.confirm("Are you sure you want to delete this item?")) {
+    if (window.confirm("Are you sure you want to delete" + index + "?")) {
       axios
-        .delete(`http://localhost:9999/cart/${index}`)
+        .delete("http://localhost:9999/cart/" + index)
         .then(() => {
           toast.success("Cart updated successfully");
           setListCart(listCart.filter((t) => t._id !== index));
@@ -77,6 +78,8 @@ const Cart = (props) => {
   };
 
   const handleCheckout = () => {
+    // Use navigate to pass data via state
+    navigate("/checkout", { state: { listCart } });
     setVisible(false);
   };
 
@@ -85,14 +88,12 @@ const Cart = (props) => {
       <div style={{ display: "flex", justifyContent: "start" }}>
         <h5>Total: {formatCurrency(calculateTotal()) + " VND"}</h5>
       </div>
-      <Link to={"/checkout"}>
-        <Button className="btn btn-success" onClick={handleCheckout}>
-          <WalletFill
-            style={{ fontSize: "22px", color: "white", marginRight: "7px" }}
-          />
-          Check Out
-        </Button>
-      </Link>
+      <Button className="btn btn-success" onClick={handleCheckout}>
+        <WalletFill
+          style={{ fontSize: "22px", color: "white", marginRight: "7px" }}
+        />
+        Check Out
+      </Button>
       <Button onClick={onHide} className="btn btn-danger">
         <X style={{ fontSize: "22px" }} />
         Close

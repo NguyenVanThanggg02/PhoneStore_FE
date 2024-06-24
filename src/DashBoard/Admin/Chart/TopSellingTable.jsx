@@ -94,7 +94,7 @@ const TopSellingTable = () => {
           </TableHead>
 
           <TableBody>
-            {top5.map((product, index) => (
+          {top5 && top5.map((product, index) => (
               <TableRow key={index} hover>
                 <TableCell
                   colSpan={4}

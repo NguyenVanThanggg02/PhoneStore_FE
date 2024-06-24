@@ -117,7 +117,6 @@ const Details = () => {
     url: "http://localhost:3000",
   };
 
-  // Product details component
   const handleAddToCart = () => {
     if (selectedButton === null || selectedButtonColor === null) {
       toast.error("Please select both version and color.");
