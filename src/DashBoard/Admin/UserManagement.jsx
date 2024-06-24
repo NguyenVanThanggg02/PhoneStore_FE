@@ -38,7 +38,7 @@ const UserManagement = () => {
 
   return (
     <Container fluid>
-      <Row style={{marginLeft:'70px', marginTop:'30px', width:'1230px'}}>
+      <Row style={{marginLeft:'70px', marginTop:'30px', width:'1030px'}}>
         <Row className="ml-1 mb-2">
           <Button className="btn btn-success"><FileEarmarkSpreadsheet style={{color:'#FFFF', fontSize:'20px'}}/> Export Excel </Button>
          
@@ -46,7 +46,7 @@ const UserManagement = () => {
         <Table striped bordered hover>
           <thead>
             <tr className="text-center">
-              <th>ID</th>
+              {/* <th>ID</th> */}
               <th>Full Name</th>
               <th>Gender</th>
               <th>Address</th>
@@ -61,7 +61,7 @@ const UserManagement = () => {
           <tbody className="text-center">
             {usersToDisplay.map((u, index) => (
               <tr key={index}>
-                <td>{u._id}</td>
+                {/* <td>{u._id}</td> */}
                 <td>{u.full_name}</td>
                 <td>{u.gender}</td>
                 <td>{u.address}</td>
