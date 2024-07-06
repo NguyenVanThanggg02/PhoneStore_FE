@@ -10,7 +10,7 @@ import { Galleria } from "primereact/galleria";
 import freeship from "../../src/assets/images/freeship.png";
 import changeedit from "../../src/assets/images/change&edit.jpg";
 import SimilarProduct from "./SimilarProduct";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BreadCrumb } from "primereact/breadcrumb";
 import Comments from "../screens/Comments";
 import "../style/detail.css";
@@ -26,7 +26,7 @@ const Details = () => {
   const [selectedButton, setSelectedButton] = useState(null);
   const [selectedButtonColor, setSelectedButtonColor] = useState(null);
   const user = JSON.parse(localStorage.getItem("user"));
-
+  const nav = useNavigate();
   useEffect(() => {
     fetch(`http://localhost:9999/products/${pid}`)
       .then((resp) => resp.json())
@@ -147,6 +147,19 @@ const Details = () => {
         toast.error("Failed to add to cart. Please try again.");
         console.error(error);
       });
+  };
+
+  const handleByNow = () => {
+    const orderData = {
+      userId: user._id,
+      productId: product,
+      image: product.images[0],
+      version: version[selectedButton].version,
+      color: color[selectedButtonColor].color,
+      price: version[selectedButton].price,
+      quantity: value,
+    };
+    nav("/checkout", { state: { listCart: [orderData] } });
   };
 
   return (
@@ -312,7 +325,10 @@ const Details = () => {
             </Button>
           </div>
           <div class="d-flex justify-content-start  mt-2 mb-4 ">
-            <Button className="btn btn-success d-block text-center w-100">
+            <Button
+              className="btn btn-success d-block text-center w-100"
+              onClick={handleByNow}
+            >
               <CartCheck style={{ color: "white", fontSize: "30px" }} />
               BUY NOW
             </Button>

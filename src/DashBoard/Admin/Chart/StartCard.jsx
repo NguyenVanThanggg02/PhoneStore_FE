@@ -36,9 +36,9 @@ const Heading = styled("h6")(({ theme }) => ({
 
 const StatCards = (props) => {
   const { index } = props;
-  const [sumWeekSale, setSumWeekSale] = useState(0);
+  const [totalPSold, setTotalPSold] = useState(0);
   const [order, setOrder] = useState(0);
-  const [totalOfStock, setTotalOfStock] = useState(0);
+  const [revanueOfWeek, setRevanueOfWeek] = useState(0);
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
   const handleArrowClick = (index) => {
@@ -49,37 +49,40 @@ const StatCards = (props) => {
     axios
       .get("http://localhost:9999/users")
       .then((response) => setUsers(response.data));
-  },[]);
+  }, []);
   useEffect(() => {
-    fetch("http://localhost:9999/receipt/sumWeekSale")
+    fetch("http://localhost:9999/payment/totalpsold")
       .then((resp) => resp.json())
       .then((data) => {
-        setSumWeekSale(data.total);
+        setTotalPSold(data.productsSold);
       })
       .catch((err) => {
         console.log(err.message);
       });
   }, []);
   useEffect(() => {
-    fetch("http://localhost:9999/inventory/getTotalOfStock")
+    fetch("http://localhost:9999/payment/totalamountweekly")
       .then((resp) => resp.json())
       .then((data) => {
-        setTotalOfStock(data.total);
+        setRevanueOfWeek(data.totalAmountWeek);
       })
       .catch((err) => {
         console.log(err.message);
       });
   }, []);
   useEffect(() => {
-    fetch("http://localhost:9999/order/countOrdersToDeliver")
-      .then((resp) => resp.json())
-      .then((data) => {
-        setOrder(data.orders_to_deliver);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    axios
+      .get("http://localhost:9999/payment")
+      .then((response) => setOrder(response.data));
   }, []);
+  function formatCurrency(number) {
+    // Sử dụng hàm toLocaleString() để định dạng số thành chuỗi với ngăn cách hàng nghìn và mặc định là USD.
+    if (typeof number === "number") {
+      return number.toLocaleString("en-US", {
+        currency: "VND",
+      });
+    }
+  }
   const cardList = [
     {
       name: "Total of user",
@@ -88,20 +91,20 @@ const StatCards = (props) => {
       index: 0,
     },
     {
-      name: "This week Sales",
-      amount: `${sumWeekSale} $`,
-      icon: "pi pi-dollar",
+      name: "Total orders",
+      amount: `${order.length} orders `,
+      icon: "pi pi-shopping-cart",
       index: 0,
     },
     {
-      name: "Inventory Status",
-      amount: `${totalOfStock} products in Stock`,
-      icon: "pi pi-briefcase",
+      name: "Total products sold.",
+      amount: `${totalPSold} products `,
+      icon: "pi pi-shopping-cart",
       index: 1,
     },
     {
-      name: "Orders to deliver",
-      amount: `${order} Orders`,
+      name: "This week's revenue",
+      amount: `${formatCurrency(revanueOfWeek)} đ`,
       icon: "pi pi-shopping-cart",
       index: 3,
     },

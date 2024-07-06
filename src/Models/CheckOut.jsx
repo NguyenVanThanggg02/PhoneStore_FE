@@ -72,7 +72,14 @@ const CheckOut = () => {
         toast.error(error.response.data.message);
       });
   };
-
+  function formatCurrency(number) {
+    // Sử dụng hàm toLocaleString() để định dạng số thành chuỗi với ngăn cách hàng nghìn và mặc định là USD.
+    if (typeof number === "number") {
+      return number.toLocaleString("en-US", {
+        currency: "VND",
+      });
+    }
+  }
   return (
     <Container fluid>
       <Row
@@ -102,6 +109,10 @@ const CheckOut = () => {
                 <h3 className="title pb-4 text-center">Billing address</h3>
               </div>
               <div className="form-group">
+                <label>
+                  <h6>Full Name</h6>
+                </label>
+
                 <input
                   className="input"
                   type="text"
@@ -112,6 +123,9 @@ const CheckOut = () => {
               </div>
 
               <div className="form-group">
+                <label>
+                  <h6>Email</h6>
+                </label>
                 <input
                   className="input"
                   type="email"
@@ -121,6 +135,9 @@ const CheckOut = () => {
                 />
               </div>
               <div className="form-group">
+                <label>
+                  <h6>Address</h6>
+                </label>
                 <input
                   className="input"
                   type="text"
@@ -130,6 +147,9 @@ const CheckOut = () => {
                 />
               </div>
               <div className="form-group">
+                <label>
+                  <h6>Telephone</h6>
+                </label>
                 <input
                   className="input"
                   type="tel"
@@ -139,10 +159,10 @@ const CheckOut = () => {
                 />
               </div>
               <div className="form-group">
-                <label>Payment method</label>
+                <label><h6>Payment method</h6></label>
                 <select
                   className="input payment_method w-100"
-                  style={{ height: "35px" }}
+                  style={{ height: "44px", borderRadius: "15px" }}
                   name="payment_method"
                   onChange={(e) => setPaymentMethod(e.target.value)}
                 >
@@ -175,22 +195,20 @@ const CheckOut = () => {
                     {listCart.map((item) => (
                       <tr key={item._id}>
                         <td>{item.productId.name}</td>
-                        {/* <td>{formatCurrency(item.price) + " VND"}</td> */}
-                        <td>{item.price + " VND"}</td>
+                        <td>{formatCurrency(item.price) + " VND"}</td>
                         <td>{item.version}</td>
                         <td>{item.color}</td>
                         <td>{item.quantity}</td>
-                        {/* <td>
+
+                        <td>
                           {formatCurrency(item.quantity * item.price) + " VND"}
-                        </td> */}
-                        <td>{item.quantity * item.price + " VND"}</td>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </Table>
                 <Col md={12} className="text-center  mt-auto">
-                  <h5>Total: {calculateTotal() + " VND"}</h5>
-                  {/* <h5>Total: {formatCurrency(calculateTotal()) + " VND"}</h5> */}
+                  <h5>Total: {formatCurrency(calculateTotal()) + " VND"}</h5>
 
                   {paymentMethod !== "0" && (
                     <Button
