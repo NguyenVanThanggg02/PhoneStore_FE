@@ -26,6 +26,7 @@ import Blog from "./screens/Blog";
 import DashBoard from "./DashBoard/Admin/DashBoard";
 import ForgotPassword from "./screens/ForgotPassWord";
 import ResetpassWord from "./screens/ResetPassword";
+import OrderStatusOfUser from "./DashBoard/OrderMana/OrderOfUser/OrderStatusOfUser";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -85,6 +86,7 @@ function App() {
           <Route path="/dashboard" element={<DashBoard/>} />
           <Route path="/forgot-password" element={<ForgotPassword/>} />
           <Route path="/reset-password/:id" element={<ResetpassWord/>} />
+          <Route path="/oderstatus" element={<OrderStatusOfUser/>} />
         </Routes>
         <Footer />
         <ToastContainer />

@@ -1,12 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Image, Nav, Row } from "react-bootstrap";
 import { Cart3, CartDashFill } from "react-bootstrap-icons";
 import logo from "../../src/assets/images/logo.jpg";
 import "../style/banner.css";
 import Cart from "./Cart";
+import axios from "axios";
+import { Badge } from "primereact/badge";
+
 
 const Banner = () => {
   const [visible, setVisible] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+  const user = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    axios
+      .get(`http://localhost:9999/cart/${user._id}`)
+      .then((res) => {
+        const fetchCart = res.data;
+        const totalItem = fetchCart.length;
+        setCartCount(totalItem);
+      })
+      .catch((err) => console.log(err));
+  }, [user, visible]);
+
   return (
     <Container fluid className="Banner">
       <Row>
@@ -62,20 +78,23 @@ const Banner = () => {
           md={2}
           xs={12}
           sm={6}
-          style={{cursor:'pointer'}}
+          style={{ cursor: "pointer" }}
           className="text-right d-flex justify-content-center align-items-center"
           onClick={() => setVisible(true)}
         >
-          <CartDashFill
+          {/* <CartDashFill
             style={{ color: "white", fontSize: "30px", marginTop: "-15px" }}
-          />
+          /> */}
+           <i
+            className=" pi pi-cart-minus p-overlay-badge"
+            style={{ fontSize: "2rem", color: "white" }}
+          >
+            <Badge value={cartCount}></Badge>
+          </i>
         </Col>
       </Row>
 
-      {visible === true && (
-        <Cart visible={visible} setVisible={setVisible} />
-      )}
-
+      {visible === true && <Cart visible={visible} setVisible={setVisible} />}
     </Container>
   );
 };

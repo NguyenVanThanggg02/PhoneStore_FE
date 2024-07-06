@@ -60,6 +60,7 @@ const Comments = () => {
       .then((response) => {
         if (response.status === 201) {
           const newCommentId = response.data.comment._id; // Lấy _id từ phản hồi của máy chủ
+          console.log(newCommentId);
           setListComments([
             { _id: newCommentId, userId: user, text: text },
             ...listComments,

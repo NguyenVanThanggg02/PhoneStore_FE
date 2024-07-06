@@ -7,8 +7,11 @@ import {
   Icon,
   lighten,
   styled,
-  useTheme
+  useTheme,
 } from "@mui/material";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 const ContentBox = styled("div")(() => ({
   display: "flex",
   flexWrap: "wrap",
@@ -55,49 +58,40 @@ const StatCards2 = () => {
   const { palette } = useTheme();
   const textError = palette.error.main;
   const bgError = lighten(palette.error.main, 0.85);
+  const [totalAmount, setTotalAmount] = useState(0);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:9999/payment/totalamount")
+      .then((response) => setTotalAmount(response.data))
+      .catch((error) => console.log(error));
+  });
+  function formatCurrency(number) {
+    // Sử dụng hàm toLocaleString() để định dạng số thành chuỗi với ngăn cách hàng nghìn và mặc định là USD.
+    if (typeof number === "number") {
+      return number.toLocaleString("en-US", {
+        currency: "VND",
+      });
+    }
+  }
   return (
-    <Grid container spacing={3} sx={{ mb: 3 }}>
-      <Grid item xs={12} md={6}>
-        <Card elevation={3} sx={{ p: 2 }}>
-          <ContentBox>
-            <FabIcon
-              size="medium"
-              sx={{ background: "rgba(9, 182, 109, 0.15)" }}
-            >
-              <Moving sx={{ color: "#08ad6c" }} />
-            </FabIcon>
-            <H3 textcolor={"#08ad6c"}>Active Users</H3>
-          </ContentBox>
-
-          <ContentBox sx={{ pt: 2 }}>
-            <H1>10.8k</H1>
-            <IconBox sx={{ background: "rgba(9, 182, 109, 0.15)" }}>
-              <Icon className="icon">expand_less</Icon>
-            </IconBox>
-            <Span textcolor={"#08ad6c"}>(+21%)</Span>
-          </ContentBox>
-        </Card>
-      </Grid>
-
-      <Grid item xs={12} md={6}>
-        <Card elevation={3} sx={{ p: 2 }}>
+    <Grid container spacing={12}>
+      <Grid item xs={12} md={12}>
+        <Card elevation={6} sx={{ p: 2 }} style={{ height: '340px' }}>
           <ContentBox>
             <FabIcon
               size="medium"
               sx={{ background: bgError, overflow: "hidden" }}
             >
-              <StarBorderIcon sx={{ color: textError }}>star_outline</StarBorderIcon>
+              <StarBorderIcon sx={{ color: textError }}>
+                star_outline
+              </StarBorderIcon>
             </FabIcon>
             <H3 textcolor={textError}>Transactions</H3>
           </ContentBox>
 
           <ContentBox sx={{ pt: 2 }}>
-            <H1>$2.8M</H1>
-            <IconBox sx={{ background: bgError }}>
-              <Icon className="icon">expand_less</Icon>
-            </IconBox>
-            <Span textcolor={textError}>(+21%)</Span>
+            <H1>{formatCurrency(totalAmount.amount) +" đ"}</H1>
           </ContentBox>
         </Card>
       </Grid>

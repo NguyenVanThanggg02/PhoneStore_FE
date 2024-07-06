@@ -3,7 +3,6 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import {
   CartCheck,
   CartPlus,
-  CashCoin,
   GearFill,
   HouseHeartFill,
 } from "react-bootstrap-icons";
@@ -11,11 +10,12 @@ import { Galleria } from "primereact/galleria";
 import freeship from "../../src/assets/images/freeship.png";
 import changeedit from "../../src/assets/images/change&edit.jpg";
 import SimilarProduct from "./SimilarProduct";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BreadCrumb } from "primereact/breadcrumb";
 import Comments from "../screens/Comments";
 import "../style/detail.css";
-
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Details = () => {
   const { pid } = useParams();
@@ -25,8 +25,8 @@ const Details = () => {
   const [images, setImages] = useState([]);
   const [selectedButton, setSelectedButton] = useState(null);
   const [selectedButtonColor, setSelectedButtonColor] = useState(null);
-
-
+  const user = JSON.parse(localStorage.getItem("user"));
+  const nav = useNavigate();
   useEffect(() => {
     fetch(`http://localhost:9999/products/${pid}`)
       .then((resp) => resp.json())
@@ -57,7 +57,6 @@ const Details = () => {
     },
   ];
 
-
   const handleButtonClick = (index) => {
     setSelectedButton(index);
   };
@@ -74,7 +73,6 @@ const Details = () => {
       setValue((prevValue) => prevValue - 1);
     }
   };
-  const allPrices = product.option?.map((g) => g.price)[0];
 
   const formatCurrency = (value) => {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -84,7 +82,7 @@ const Details = () => {
     {
       label: (
         <span style={{ color: "gray", marginLeft: "-80px", fontSize: "19px" }}>
-         𝓓𝓪𝓷𝓱 𝓼á𝓬𝓱 𝓼ả𝓷 𝓹𝓱ẩ𝓶
+          𝓓𝓪𝓷𝓱 𝓼á𝓬𝓱 𝓼ả𝓷 𝓹𝓱ẩ𝓶
         </span>
       ),
       url: "http://localhost:3000/listproduct",
@@ -118,12 +116,81 @@ const Details = () => {
     ),
     url: "http://localhost:3000",
   };
+
+  const handleAddToCart = () => {
+    if (selectedButton === null || selectedButtonColor === null) {
+      toast.error("Please select both version and color.");
+      return;
+    }
+
+    const selectedVersion = version[selectedButton];
+    const selectedColor = color[selectedButtonColor];
+
+    const cartItem = {
+      userId: user._id,
+      productId: product._id,
+      name: product.name,
+      image: product.images[0],
+      version: selectedVersion.version,
+      color: selectedColor.color,
+      price: selectedVersion.price, // Assuming the price is part of the selected version
+      quantity: value,
+    };
+
+    axios
+      .post("http://localhost:9999/cart", cartItem)
+      .then((response) => {
+        toast.success("Added to cart successfully!");
+        console.log(response.data);
+      })
+      .catch((error) => {
+        toast.error("Failed to add to cart. Please try again.");
+        console.error(error);
+      });
+  };
+
+  const handleByNow = () => {
+    const orderData = {
+      userId: user._id,
+      productId: product,
+      image: product.images[0],
+      version: version[selectedButton].version,
+      color: color[selectedButtonColor].color,
+      price: version[selectedButton].price,
+      quantity: value,
+    };
+    nav("/checkout", { state: { listCart: [orderData] } });
+  };
+
   return (
-    <Container fluid >
-      <Row className="mt-3" style={{ border: "solid #CCC 1px", margin:"20px", boxShadow:'5px 10px 10px 5px #C0C0C0', borderRadius:'20px' }}>
-      <BreadCrumb model={items} home={home} style={{ marginTop: "15px", border:'none', backgroundColor:'transparent' }} />
+    <Container fluid>
+      <Row
+        className="mt-3"
+        style={{
+          border: "solid #CCC 1px",
+          margin: "20px",
+          boxShadow: "5px 10px 10px 5px #C0C0C0",
+          borderRadius: "20px",
+        }}
+      >
+        <BreadCrumb
+          model={items}
+          home={home}
+          style={{
+            marginTop: "15px",
+            border: "none",
+            backgroundColor: "transparent",
+          }}
+        />
       </Row>
-      <Row className=" mt-5 bg-light" style={{margin:"20px",  boxShadow:'5px 10px 10px 5px #C0C0C0', borderRadius:"20px"}}>
+      <Row
+        className=" mt-5 bg-light"
+        style={{
+          margin: "20px",
+          boxShadow: "5px 10px 10px 5px #C0C0C0",
+          borderRadius: "20px",
+        }}
+      >
         <Col md={4}>
           <div className="carddetail">
             <Galleria
@@ -135,7 +202,11 @@ const Details = () => {
                 <img src={item} alt="aa" style={{ width: "100%" }} />
               )}
               thumbnail={(item) => (
-                <img src={item} alt="aaa" style={{ width: "100%",height:'98px' }} />
+                <img
+                  src={item}
+                  alt="aaa"
+                  style={{ width: "100%", height: "98px" }}
+                />
               )}
             />
           </div>
@@ -145,7 +216,7 @@ const Details = () => {
         </Col>
 
         {/* <!-- Product details --> */}
-        <Col md={5} style={{marginTop:'10px'}}>
+        <Col md={5} style={{ marginTop: "10px" }}>
           <div className="product-details">
             <h2 className="product-name mb-4 text-dark">
               <strong>{product.name}</strong>
@@ -245,19 +316,26 @@ const Details = () => {
             </div>
           </div>
           <div class="d-flex justify-content-start  mt-4 ">
-            <Button className="btn btn-danger d-block text-center w-100">
+            <Button
+              className="btn btn-danger d-block text-center w-100"
+              onClick={handleAddToCart}
+            >
               <CartPlus style={{ color: "white", fontSize: "30px" }} />
               ADD TO CART
             </Button>
           </div>
           <div class="d-flex justify-content-start  mt-2 mb-4 ">
-            <Button className="btn btn-success d-block text-center w-100">
+            <Button
+              className="btn btn-success d-block text-center w-100"
+              onClick={handleByNow}
+            >
               <CartCheck style={{ color: "white", fontSize: "30px" }} />
               BUY NOW
             </Button>
           </div>
         </Col>
-        <Col md={3} style={{marginTop:'10px'}}>
+
+        <Col md={3} style={{ marginTop: "10px" }}>
           <h4>
             <GearFill /> Cấu Hình
           </h4>

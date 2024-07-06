@@ -4,7 +4,6 @@ import StatCards from "./Chart/StartCard";
 import TopSellingTable from "./Chart/TopSellingTable";
 import StatCards2 from "./Chart/StatCards2";
 import { Card, Grid, styled, useTheme } from "@mui/material";
-import DoughnutChart from "./Chart/Doughnut";
 import RevenueChart from "./Chart/RevenueChart";
 
 const AdminDashBoard = () => {
@@ -15,30 +14,17 @@ const AdminDashBoard = () => {
     marginRight: ".5rem",
     textTransform: "capitalize",
   }));
-  const SubTitle = styled("span")(({ theme }) => ({
-    fontSize: "0.875rem",
-    color: theme.palette.text.secondary,
-  }));
+ 
   return (
     <Container fluid>
       <Row style={{ marginLeft: "70px", marginTop: "30px", width: "100%" }}>
         <h3>Admin DashBoard</h3>
         <StatCards />
-        <TopSellingTable />
-        <StatCards2 />
+        {/* <TopSellingTable /> */}
         <Grid container spacing={3}>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
-            <Card sx={{ px: 3, py: 2, mb: 3 }}>
-              <Title>Traffic Sources</Title>
-              <SubTitle>Last 30 days</SubTitle>
-              <DoughnutChart
-                height="280px"
-                color={[
-                  palette.primary.dark,
-                  palette.primary.main,
-                  palette.primary.light,
-                ]}
-              />
+          <Grid item lg={6} md={6} sm={12} xs={12} >
+            <Card sx={{ mb: 3 }}>
+              <StatCards2 />
             </Card>
           </Grid>
           <Grid item lg={6} md={6} sm={12} xs={12}>

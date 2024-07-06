@@ -1,40 +1,21 @@
-.input{
-    width: 100%;
-    border: solid 1px rgb(184, 179, 179);
-    text-indent: 20px;
+.input {
+  width: 100%;
+  border: solid 1px rgb(184, 179, 179);
+  text-indent: 20px;
 }
 .manager-order {
-    width: 100%;
-    border: solid 1px rgb(184, 179, 179);
-    border-radius:20px ;
-    background-color: rgb(245, 237, 237);
-    height: 350px;
+  width: 100%;
+  border: solid 1px rgb(184, 179, 179);
+  border-radius: 20px;
+  background-color: rgb(245, 237, 237);
+  height: 350px;
 }
 
-.order-summary {
-    display: flex;
-    flex-direction: column;
-    margin: 3px 20px;
-  }
-  
-  .order-col {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .order-col div {
-    margin-right: 10px;
-  }
-  
-  .order-col strong {
-    display: inline-block;
-  }
-.form-group input{
+.form-group input {
   border-radius: 15px;
   height: 45px;
 }
-.checkout_item{
+.checkout_item {
   border-radius: 50px;
   margin-bottom: 20px;
 }
