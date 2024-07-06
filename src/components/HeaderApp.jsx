@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowRepeat,
   BoxArrowInRight,
+  Cart2,
   EnvelopeFill,
   GeoAltFill,
   GraphUpArrow,
@@ -35,6 +36,10 @@ const HeaderApp = () => {
       name: "Change Password",
       icon: <ArrowRepeat style={{ fontSize: "20px", marginRight: "10px" }} />,
     },
+  {
+    name: "My Orders",
+    icon: <Cart2 style={{ fontSize: "20px", marginRight: "10px" }} />,
+  }
   ];
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -64,6 +69,10 @@ const HeaderApp = () => {
   };
   const handleDashBoard = () => {
     nav("/dashboard");
+    handleCloseUserMenu();
+  };
+  const handleViewOrder = () => {
+    nav("/oderstatus");
     handleCloseUserMenu();
   };
   if (user && user.role === 1) {
@@ -145,6 +154,8 @@ const HeaderApp = () => {
                             ? handleProfile
                             : setting.name === "Change Password"
                             ? handleChangePass
+                            : setting.name === "My Orders"
+                            ? handleViewOrder
                             : handleCloseUserMenu
                         }
                       >

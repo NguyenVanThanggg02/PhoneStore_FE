@@ -5,9 +5,6 @@ import { FileEarmarkSpreadsheet, Trash } from "react-bootstrap-icons";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
-  const [first, setFirst] = useState(0);
-  const [rows, setRows] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetch("http://localhost:9999/users")
@@ -20,28 +17,25 @@ const UserManagement = () => {
       });
   }, []);
 
-  const onPageChange = (event) => {
-    setFirst(event.first);
-    setCurrentPage(event.page + 1);
-    setRows(event.rows);
-  };
-  const usersToDisplay = users.slice(first, first + rows);
-
   const formatDate = (inputDate) => {
     const dateObject = new Date(inputDate);
-    const day = dateObject.getDate().toString().padStart(2, '0');
-    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+    const day = dateObject.getDate().toString().padStart(2, "0");
+    const month = (dateObject.getMonth() + 1).toString().padStart(2, "0");
     const year = dateObject.getFullYear();
     const formattedDate = `${day}-${month}-${year}`;
     return formattedDate;
-  }
+  };
 
   return (
     <Container fluid>
-      <Row style={{marginLeft:'70px', marginTop:'30px', width:'1030px'}}>
+      <Row style={{ marginLeft: "70px", marginTop: "30px", width: "1030px" }}>
         <Row className="ml-1 mb-2">
-          <Button className="btn btn-success"><FileEarmarkSpreadsheet style={{color:'#FFFF', fontSize:'20px'}}/> Export Excel </Button>
-         
+          <Button className="btn btn-success">
+            <FileEarmarkSpreadsheet
+              style={{ color: "#FFFF", fontSize: "20px" }}
+            />{" "}
+            Export Excel{" "}
+          </Button>
         </Row>
         <Table striped bordered hover>
           <thead>
@@ -59,9 +53,8 @@ const UserManagement = () => {
           </thead>
 
           <tbody className="text-center">
-            {usersToDisplay.map((u, index) => (
+            {users.map((u, index) => (
               <tr key={index}>
-                {/* <td>{u._id}</td> */}
                 <td>{u.full_name}</td>
                 <td>{u.gender}</td>
                 <td>{u.address}</td>
@@ -69,29 +62,10 @@ const UserManagement = () => {
                 <td>{u.phone}</td>
                 <td>{u.email}</td>
                 <td>{u.username}</td>
-                {/* <td>
-                    <Button className="btn btn-danger">Ban</Button>
-                      
-                </td> */}
               </tr>
             ))}
           </tbody>
         </Table>
-      </Row>
-      <Row
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "20px",
-          marginTop: "20px",
-        }}
-      >
-        <Paginator
-          first={first}
-          rows={rows}
-          totalRecords={users.length}
-          onPageChange={onPageChange}
-        />
       </Row>
     </Container>
   );

@@ -3,7 +3,6 @@ import { Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import TopSelling from "./TopSelling";
 import NewProducts from "./NewProducts";
-import TopSellingCategory from "./TopSellingCategory";
 import SliderBanner from "../components/SliderBanner";
 import "../style/home.css";
 
@@ -18,9 +17,7 @@ const Home = () => {
       <Row>
         <TopSelling />
       </Row>
-      <Row>
-        <TopSellingCategory />
-      </Row>
+      
     </Container>
   );
 };

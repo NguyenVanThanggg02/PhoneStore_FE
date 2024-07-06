@@ -11,7 +11,8 @@ const Cart = (props) => {
   const [listCart, setListCart] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate(); // Use the useNavigate hook
-
+  const [selectedAll, setSelectedAll] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
   useEffect(() => {
     axios
       .get(`http://localhost:9999/cart/${user._id}`)
@@ -78,9 +79,28 @@ const Cart = (props) => {
   };
 
   const handleCheckout = () => {
-    // Use navigate to pass data via state
-    navigate("/checkout", { state: { listCart } });
-    setVisible(false);
+    if (selectedItems.length === 0) {
+      toast.warning("Please select a product");
+    } else {
+      const buy =
+        selectedItems.length > 0
+          ? listCart.filter((i) => selectedItems.includes(i._id))
+          : listCart;
+      // Use navigate to pass data via state
+      navigate("/checkout", { state: { listCart: buy } });
+      setVisible(false);
+    }
+  };
+  const handleSelectedAll = () => {
+    setSelectedAll(!selectedAll);
+    setSelectedItems(selectedAll ? [] : listCart.map((item) => item._id));
+  };
+  const handleSelectedItems = (itemId) => {
+    if (selectedItems.includes(itemId)) {
+      setSelectedItems(selectedItems.filter((id) => id !== itemId));
+    } else {
+      setSelectedItems([...selectedItems, itemId]);
+    }
   };
 
   const dialogFooter = (
@@ -120,6 +140,13 @@ const Cart = (props) => {
                   <table className="table table-condensed">
                     <thead>
                       <tr>
+                        <th>
+                          <input
+                            type="checkbox"
+                            checked={selectedAll}
+                            onChange={handleSelectedAll}
+                          />
+                        </th>
                         <th style={{ width: "15%" }}>Image</th>
                         <th style={{ width: "25%" }}>Product</th>
                         <th style={{ width: "20%" }}>Price</th>
@@ -133,6 +160,13 @@ const Cart = (props) => {
                     <tbody>
                       {listCart.map((item, index) => (
                         <tr key={item._id}>
+                          <td>
+                            <input
+                              type="checkbox"
+                              checked={selectedItems.includes(item._id)}
+                              onChange={() => handleSelectedItems(item._id)}
+                            />
+                          </td>
                           <td style={{ display: "flex", textAlign: "center" }}>
                             <img
                               src={item.productId.images[0]}

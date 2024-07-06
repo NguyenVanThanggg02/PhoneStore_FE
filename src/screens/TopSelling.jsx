@@ -1,118 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import { CartDashFill } from "react-bootstrap-icons";
+import { CartDashFill, CashCoin } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const TopSelling = () => {
+  const [bestSeller, setBestSeller] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:9999/payment/top-products")
+      .then((response) => setBestSeller(response.data))
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
-    <Container>
-      <Row className="new-products">
-        <Col md={6} className="text-left">
-          <h3>Top Selling</h3>
-        </Col>
-        <Col md={6} className=" d-flex justify-content-end">
-          <Row>
-            <Col>
-              <h5>Iphone</h5>
-            </Col>
-            <Col>
-              <h5>SamSung</h5>
-            </Col>
-            <Col>
-              <h5>Oppo</h5>
-            </Col>
-          </Row>
+    <Container fluid className="mb-4"> 
+      <Row className="new-products" >
+      <Col md={12} className="text-left text-center">
+          <h3 style={{ margin: "20px" }}>Top Selling</h3>
         </Col>
       </Row>
-      <Row className=" new-products-item d-flex justify-content-between">
-      <Col md={3} sm={6} xs={12}>
-          <Card>
-            <Link to={"/details"} className="text-dark">
-              <Card.Img
-                variant="top"
-                src="https://i.ebayimg.com/images/g/6U0AAOSwkw5iMjJg/s-l1200.webp"
-              />
-
-              <Card.Body className="text-center">
-                <Card.Text>Category</Card.Text>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Title>$100</Card.Title>
-              </Card.Body>
-            </Link>
-            <Card.Footer className="text-center">
-              <Button className="btn btn-danger">
-                <CartDashFill style={{ color: "white", fontSize: "30px" }} />
-                ADD TO CART
-              </Button>
-            </Card.Footer>
-          </Card>
-        </Col>
-        <Col md={3} sm={6} xs={12}>
-          <Card>
-            <Link to={"/details"} className="text-dark">
-              <Card.Img
-                variant="top"
-                src="https://i.ebayimg.com/images/g/6U0AAOSwkw5iMjJg/s-l1200.webp"
-              />
-
-              <Card.Body className="text-center">
-                <Card.Text>Category</Card.Text>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Title>$100</Card.Title>
-              </Card.Body>
-            </Link>
-            <Card.Footer className="text-center">
-              <Button className="btn btn-danger">
-                <CartDashFill style={{ color: "white", fontSize: "30px" }} />
-                ADD TO CART
-              </Button>
-            </Card.Footer>
-          </Card>
-        </Col>
-        <Col md={3} sm={6} xs={12}>
-          <Card>
-            <Link to={"/details"} className="text-dark">
-              <Card.Img
-                variant="top"
-                src="https://i.ebayimg.com/images/g/6U0AAOSwkw5iMjJg/s-l1200.webp"
-              />
-
-              <Card.Body className="text-center">
-                <Card.Text>Category</Card.Text>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Title>$100</Card.Title>
-              </Card.Body>
-            </Link>
-            <Card.Footer className="text-center">
-              <Button className="btn btn-danger">
-                <CartDashFill style={{ color: "white", fontSize: "30px" }} />
-                ADD TO CART
-              </Button>
-            </Card.Footer>
-          </Card>
-        </Col>
-        <Col md={3} sm={6} xs={12}>
-          <Card>
-            <Link to={"/details"} className="text-dark">
-              <Card.Img
-                variant="top"
-                src="https://i.ebayimg.com/images/g/6U0AAOSwkw5iMjJg/s-l1200.webp"
-              />
-
-              <Card.Body className="text-center">
-                <Card.Text>Category</Card.Text>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Title>$100</Card.Title>
-              </Card.Body>
-            </Link>
-            <Card.Footer className="text-center">
-              <Button className="btn btn-danger">
-                <CartDashFill style={{ color: "white", fontSize: "30px" }} />
-                ADD TO CART
-              </Button>
-            </Card.Footer>
-          </Card>
-        </Col>
+      <Row className=" new-products-item d-flex justify-content-between" style={{ margin: "10px" }}>
+        {bestSeller.map((b) => (
+          <Col md={3} sm={6} xs={12}>
+            <Card style={{ height: "100%", boxShadow: "5px 10px 10px 5px #C0C0C0"}}>
+              <Link to={"/details/" +b._id}  className="text-dark">
+                <Card.Img
+                  variant="top"
+                  src={b.images[0]}
+                />
+                <Card.Body className="text-center">
+                  <Card.Text>{b.brand.hangSanXuat}</Card.Text>
+                  <Card.Title>{b.name}</Card.Title>
+                </Card.Body>
+              </Link>
+              <Card.Footer className="text-center">
+                <strong style={{ color: "orange" }}>
+                  <CashCoin style={{ fontSize: "30px", marginRight:'10px' }} />
+                  {b.option[0]?.price}
+                </strong>
+              </Card.Footer>
+            </Card>
+          </Col>
+        ))}
       </Row>
     </Container>
   );
