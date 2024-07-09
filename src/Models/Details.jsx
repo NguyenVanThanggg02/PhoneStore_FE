@@ -22,7 +22,6 @@ const Details = () => {
   const [product, setProduct] = useState({}); // Initialize as null instead of an empty object
   const [version, setVersion] = useState([]); // Initialize as empty array
   const [color, setColor] = useState([]);
-  const [images, setImages] = useState([]);
   const [selectedButton, setSelectedButton] = useState(null);
   const [selectedButtonColor, setSelectedButtonColor] = useState(null);
   const user = JSON.parse(localStorage.getItem("user"));
@@ -150,16 +149,21 @@ const Details = () => {
   };
 
   const handleByNow = () => {
-    const orderData = {
-      userId: user._id,
-      productId: product,
-      image: product.images[0],
-      version: version[selectedButton].version,
-      color: color[selectedButtonColor].color,
-      price: version[selectedButton].price,
-      quantity: value,
-    };
-    nav("/checkout", { state: { listCart: [orderData] } });
+    if (selectedButton === null || selectedButtonColor === null) {
+      toast.warning("Please select both version and color.");
+      return;
+    } else {
+      const orderData = {
+        userId: user._id,
+        productId: product,
+        image: product.images[0],
+        version: version[selectedButton].version,
+        color: color[selectedButtonColor].color,
+        price: version[selectedButton].price,
+        quantity: value,
+      };
+      nav("/checkout", { state: { listCart: [orderData] } });
+    }
   };
 
   return (

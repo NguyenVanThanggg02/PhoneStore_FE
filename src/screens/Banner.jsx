@@ -7,20 +7,21 @@ import Cart from "./Cart";
 import axios from "axios";
 import { Badge } from "primereact/badge";
 
-
 const Banner = () => {
   const [visible, setVisible] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
-    axios
-      .get(`http://localhost:9999/cart/${user._id}`)
-      .then((res) => {
-        const fetchCart = res.data;
-        const totalItem = fetchCart.length;
-        setCartCount(totalItem);
-      })
-      .catch((err) => console.log(err));
+    if (user) {
+      axios
+        .get(`http://localhost:9999/cart/${user._id}`)
+        .then((res) => {
+          const fetchCart = res.data;
+          const totalItem = fetchCart.length;
+          setCartCount(totalItem);
+        })
+        .catch((err) => console.log(err));
+    }
   }, [user, visible]);
 
   return (
@@ -82,15 +83,18 @@ const Banner = () => {
           className="text-right d-flex justify-content-center align-items-center"
           onClick={() => setVisible(true)}
         >
-          {/* <CartDashFill
-            style={{ color: "white", fontSize: "30px", marginTop: "-15px" }}
-          /> */}
-           <i
-            className=" pi pi-cart-minus p-overlay-badge"
-            style={{ fontSize: "2rem", color: "white" }}
-          >
-            <Badge value={cartCount}></Badge>
-          </i>
+          {user ? (
+            <i
+              className=" pi pi-cart-minus p-overlay-badge"
+              style={{ fontSize: "2rem", color: "white" }}
+            >
+              <Badge value={cartCount}></Badge>
+            </i>
+          ) : (
+            <CartDashFill
+              style={{ color: "white", fontSize: "30px", marginTop: "-15px" }}
+            />
+          )}
         </Col>
       </Row>
 
