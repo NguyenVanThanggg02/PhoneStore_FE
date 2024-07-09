@@ -86,7 +86,7 @@ function App() {
           <Route path="/dashboard" element={<DashBoard/>} />
           <Route path="/forgot-password" element={<ForgotPassword/>} />
           <Route path="/reset-password/:id" element={<ResetpassWord/>} />
-          <Route path="/oderstatus" element={<OrderStatusOfUser/>} />
+          <Route path="/orderstatus" element={<OrderStatusOfUser/>} />
         </Routes>
         <Footer />
         <ToastContainer />

@@ -8,7 +8,6 @@ import {
   EnvelopeFill,
   GeoAltFill,
   GraphUpArrow,
-  PersonCircle,
   PersonVcard,
   TelephoneFill,
 } from "react-bootstrap-icons";
@@ -18,7 +17,6 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import UserProfile from "../screens/UserProfile";
 
 const HeaderApp = () => {
   const settings = [
@@ -27,25 +25,25 @@ const HeaderApp = () => {
       icon: <PersonVcard style={{ fontSize: "20px", marginRight: "10px" }} />,
     },
     {
+      name: "Change Password",
+      icon: <ArrowRepeat style={{ fontSize: "20px", marginRight: "10px" }} />,
+    },
+    {
+      name: "My Orders",
+      icon: <Cart2 style={{ fontSize: "20px", marginRight: "10px" }} />,
+    },
+    {
       name: "Logout",
       icon: (
         <BoxArrowInRight style={{ fontSize: "20px", marginRight: "10px" }} />
       ),
     },
-    {
-      name: "Change Password",
-      icon: <ArrowRepeat style={{ fontSize: "20px", marginRight: "10px" }} />,
-    },
-  {
-    name: "My Orders",
-    icon: <Cart2 style={{ fontSize: "20px", marginRight: "10px" }} />,
-  }
   ];
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const nav = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -72,20 +70,33 @@ const HeaderApp = () => {
     handleCloseUserMenu();
   };
   const handleViewOrder = () => {
-    nav("/oderstatus");
+    nav("/orderstatus");
     handleCloseUserMenu();
   };
+
   if (user && user.role === 1) {
-    settings.push({
+    settings.splice(3, 0, {
       name: "DashBoard",
       icon: <GraphUpArrow style={{ fontSize: "20px", marginRight: "10px" }} />,
     });
   }
+
+  //  logout luôn ở cuối mảng
+  const orderedSettings = [
+    ...settings.filter((s) => s.name !== "Logout"),
+    ...settings.filter((s) => s.name === "Logout"),
+  ];
+
   return (
     <Container fluid>
       <div>
         <Row className="header">
-          <Col md={7} xs={12} sm={6} className="header-item d-flex text-white mt-1">
+          <Col
+            md={7}
+            xs={12}
+            sm={6}
+            className="header-item d-flex text-white mt-1"
+          >
             <Col md={6} sm={4} xs={4}>
               <TelephoneFill style={{ color: "red" }} /> {user.phone}
             </Col>
@@ -136,36 +147,27 @@ const HeaderApp = () => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) =>
-                    setting.name === "DashBoard" && user && user.role === 1 ? (
-                      <MenuItem key={setting.name} onClick={handleDashBoard}>
-                        {setting.icon}
-                        <Typography textAlign="center">
-                          {setting.name}
-                        </Typography>
-                      </MenuItem>
-                    ) : (
-                      <MenuItem
-                        key={setting.name}
-                        onClick={
-                          setting.name === "Logout"
-                            ? handleLogout
-                            : setting.name === "Profile"
-                            ? handleProfile
-                            : setting.name === "Change Password"
-                            ? handleChangePass
-                            : setting.name === "My Orders"
-                            ? handleViewOrder
-                            : handleCloseUserMenu
-                        }
-                      >
-                        {setting.icon}
-                        <Typography textAlign="center">
-                          {setting.name}
-                        </Typography>
-                      </MenuItem>
-                    )
-                  )}
+                  {orderedSettings.map((setting) => (
+                    <MenuItem
+                      key={setting.name}
+                      onClick={
+                        setting.name === "Logout"
+                          ? handleLogout
+                          : setting.name === "Profile"
+                          ? handleProfile
+                          : setting.name === "Change Password"
+                          ? handleChangePass
+                          : setting.name === "My Orders"
+                          ? handleViewOrder
+                          : setting.name === "DashBoard"
+                          ? handleDashBoard
+                          : handleCloseUserMenu
+                      }
+                    >
+                      {setting.icon}
+                      <Typography textAlign="center">{setting.name}</Typography>
+                    </MenuItem>
+                  ))}
                 </Menu>
               </Box>
             </Col>
